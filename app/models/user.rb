@@ -6,14 +6,16 @@ class User < ActiveRecord::Base
   has_many :repos, through: :repos_users
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable
+         :recoverable, :rememberable, :trackable, :omniauthable
+
+  validates :email, presence: false, email: false
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
       user.email = auth.info.email
+      user.login = auth.info.nickname
       user.password = Devise.friendly_token[0,20]
     end
   end

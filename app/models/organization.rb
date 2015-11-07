@@ -19,12 +19,11 @@ class Organization < ActiveRecord::Base
   def fetch_repos_as_user!(user)
     client = user.client
     return if client.nil?
-    reps = client.repos(name)
+    reps = client.repos(name, per_page: 100)
     while client.last_response.rels[:next]
       reps.concat client.last_response.rels[:next].get.data
     end
     reps.each do |repo|
-      puts repo.name
       repos.where(name: repo.name).first_or_create
     end
   end

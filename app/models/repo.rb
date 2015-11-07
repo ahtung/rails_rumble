@@ -10,8 +10,16 @@ class Repo < ActiveRecord::Base
     while client.last_response.rels[:next]
       contributors.concat client.last_response.rels[:next].get.data
     end
+    return if contributors == ''
+    users.delete_all
     contributors.each do |contributor|
-      users.where(login: contributor.login).first_or_create
+      puts contributor.login
+      user = User.where(login: contributor.login).first_or_create do |user|
+        user.provider = 'github'
+        user.uid = contributor.id
+        user.password = Devise.friendly_token[0,20]
+      end
+      users << user unless users.include?(user)
     end
   end
 end

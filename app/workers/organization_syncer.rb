@@ -12,13 +12,13 @@ class OrganizationSyncer
       end_of_month = Date.new(year, month, 1).end_of_month
 
       organization.repos.each do |repo|
-        organization_members = {}
         repo.fetch_contributors_as_user!(user)
-        contributors = repo.contributors
-        next if contributors.blank?
-        contributor_names = contributors.map(&:name)
+        next if repo.users.blank?
+        contributor_names = repo.users.map(&:login)
+        # puts contributor_names.count
         contributor_names.each do |contributor|
-          puts "#{organization.name}/#{repo.name}"
+          puts "contributor #{contributor}"
+          # puts "#{organization.name}/#{repo.name}"
           # begin
           #   commits = client.commits(
           #     "#{organization.name}/#{repo.name}",

@@ -6,7 +6,7 @@ class OrganizationsController < ApplicationController
 
   def sync
     @organization.sync!(2015, current_user)
-    redirect_to @organization, notice: 'OO'
+    redirect_to @organization, notice: 'Sync started'
   end
 
   private
