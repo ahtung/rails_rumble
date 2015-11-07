@@ -19,11 +19,13 @@ class User < ActiveRecord::Base
     user = client.user
     user.login
     orgs = user.rels[:organizations].get.data
-    organization_names = orgs.map { |org| { name: org.login } }
-    organizations.create(organization_names)
+    while client.last_response.rels[:next]
+      orgs.concat client.last_response.rels[:next].get.data
+    end
+    orgs.each do |org|
+      organizations.where(name: org.login).first_or_create
+    end
   end
-
-  private
 
   def client
     return if oauth_token.nil?

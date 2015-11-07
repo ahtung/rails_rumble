@@ -3,11 +3,16 @@
   - if @organization.previous
     = link_to "<", @organization.previous
   h1= @organization.name
+  h2= @organization.repos.count
   - if @organization.next
     = link_to ">", @organization.next
   p
     = link_to 'Sync', sync_organization_path(@organization)
     = link_to 'Sign Out', destroy_user_session_path, method: :delete
+  
+.row
+  .progress.small-12
+    span.meter style="width: 40%"
 
 .row
   ul.small-block-grid-1.medium-block-grid-3

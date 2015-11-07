@@ -14,12 +14,20 @@ class Organization < ActiveRecord::Base
     self.class.where(["id > ?", id]).first
   end
 
-  def sync!(year)
-    OrganizationSyncer.perform_async(id, year)
+  def sync!(year, user)
+    OrganizationSyncer.perform_async(id, year, user.id)
   end
 
-  def fetch_repos!
-    repos.create(name: 'test')
+  def fetch_repos_as_user!(user)
+    client = user.client
+    reps = client.repos(name)
+    while client.last_response.rels[:next]
+      reps.concat client.last_response.rels[:next].get.data
+    end
+    reps.each do |repo|
+      puts repo.name
+      repos.where(name: repo.name).first_or_create
+    end
   end
 
   def employees_of_the_year(year)

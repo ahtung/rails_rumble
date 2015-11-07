@@ -2,9 +2,10 @@ class OrganizationSyncer
   include Sidekiq::Worker
   sidekiq_options retry: false
 
-  def perform(id, year)
+  def perform(id, year, user_id)
+    user = User.find(user_id)
     organization = Organization.find(id)
-    organization.fetch_repos!
+    organization.fetch_repos_as_user!(user)
 
     for month in 1..12 do
       beginning_of_month = Date.new(year, month, 1).beginning_of_month
