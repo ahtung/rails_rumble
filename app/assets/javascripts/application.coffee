@@ -17,7 +17,12 @@ $ ->
       pager: false,
       captions: true
     )
-    sliders[i].startAuto()
+
+    if sliders[i].data('complete')
+      sliders[i].stopAuto()
+    else
+      sliders[i].startAuto()
+
 
 
   dispatcher = new WebSocketRails('localhost:3000/websocket')
@@ -28,7 +33,6 @@ $ ->
 
     member_pos = find_member_pos(task)
     if member_pos != -1
-      console.log(member_pos)
       sliders[parseInt(task.month) - 1].stopAuto()
       sliders[parseInt(task.month) - 1].goToSlide(member_pos + 1)
   )
