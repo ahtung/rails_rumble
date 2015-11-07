@@ -4,4 +4,4 @@
 - else
   p N/A
   = image_tag 'http://placehold.it/460x460', class: 'th'
-p= Date::MONTHNAMES[index + 1]
+p = "#{sprintf '%02d', (index + 1)} #{Date::MONTHNAMES[index + 1]}"
