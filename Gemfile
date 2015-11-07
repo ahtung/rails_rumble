@@ -15,6 +15,7 @@ gem 'high_voltage', '~> 2.4.0'
 gem 'puma'
 gem 'foreman'
 gem 'foundation-rails'
+gem 'sidekiq'
 
 group :development, :test do
 end
