@@ -18,6 +18,8 @@ gem 'foundation-rails'
 gem 'sidekiq'
 gem 'factory_girl_rails'
 gem 'faker'
+gem 'devise'
+gem 'omniauth-github'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
