@@ -39,10 +39,12 @@
       h4 ... and this is what we got, give it a try
       .row
         p = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
-      
+
+      h5 if you liked our eleman boards, please leave a star on github.
+      p.text-center
+        iframe frameborder="0" height="30px" scrolling="0" src="https://ghbtns.com/github-btn.html?user=railsrumble&repo=eleman&type=star&count=true&size=large" width="160px"
+
       h4 made by
       .row
         = link_to "//www.ahtung.co", class: 'th', target: '_blank' do
           = image_tag 'ah.png'
-
-      

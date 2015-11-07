@@ -8,7 +8,12 @@
       = link_to "<", @organization.previous, class: 'button tiny'
   .small-8.columns class=('small-pull-2' unless @organization.next) class=('small-push-2' unless @organization.previous)
     h1.text-center
-      = "#{@organization.name} (#{@year})"
+      = "#{@organization.name} ("
+      a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" = @year
+      | )
+      ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
+        - get_years(@organization.est_at).each do |year|
+          li= link_to year, organization_path(@organization, year: year)
     p = link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny'
   - if @organization.next
     .small-2.columns.org-navigation
