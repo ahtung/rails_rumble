@@ -19,8 +19,7 @@ $ ->
   channel.bind('syncer', (task) ->
     perc = parseInt(task.message) * 100 / 12
     $("span.meter").css('width', "#{perc}%")
-    $("#slider-#{parseInt(task.message) - 1}").siblings(".orbit-timer").click()
-
+    $("#slider-#{parseInt(task.message) - 1}").trigger(".orbit-timer").click()
   )
 
   $(".alert-box").delay(1500).fadeOut "slow"
