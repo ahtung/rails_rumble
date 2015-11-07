@@ -16,6 +16,7 @@ gem 'puma'
 gem 'foreman'
 gem 'foundation-rails'
 gem 'sidekiq'
+gem 'devise'
 
 group :development, :test do
 end
