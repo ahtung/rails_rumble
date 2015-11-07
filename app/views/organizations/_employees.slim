@@ -1,14 +1,14 @@
-- if employee == ''
-  ul data-orbit=true data-options="timer_speed:0;"
+/ - if employee == ''
+/   ul data-orbit=true data-options="timer_speed:0;"
+/     li
+/       = image_tag 'http://placehold.it/460x460', class: 'th'
+/       .orbit-caption
+/         = 'N/A'
+/ - else
+- speed = (employee.nil? ? 500 : 0)
+ul data-orbit=true data-options="timer_speed:#{speed};" id="slider-#{index}"
+  - organization.users.each do |user|
     li
-      = image_tag 'http://placehold.it/460x460', class: 'th'
+      = image_tag user.avatar_url
       .orbit-caption
-        = 'N/A'
-- else
-  - speed = (employee.nil? ? 500 : 0)
-  ul data-orbit=true data-options="animation_speed:#{rand(250) + 250};timer_speed:#{speed};" id="slider-#{index}"
-    - organization.users.each do |user|
-      li
-        = image_tag user.avatar_url
-        .orbit-caption
-          = user.login
+        = user.login
