@@ -1,7 +1,7 @@
 .row
   .small-8.columns.small-centered
     .text-center
-      h1 ~ Eleman ~
+      h1= link_to '~ Eleman ~', root_path
       h3 Have you ever seen one of these?
       p = image_tag 'board.jpg'
       h3 ... in one of these places, maybe?
@@ -45,5 +45,4 @@
         = link_to "//www.ahtung.co", class: 'th' do
           = image_tag 'ah.png'
 
-      = link_to 'Back', page_path('welcome'), class: 'button tiny secondary'
       
