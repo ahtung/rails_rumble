@@ -20,6 +20,7 @@ gem 'factory_girl_rails'
 gem 'faker'
 gem 'devise'
 gem 'omniauth-github'
+gem 'octokit'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
