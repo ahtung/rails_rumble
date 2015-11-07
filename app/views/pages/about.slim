@@ -15,29 +15,29 @@
         .small-4.column
           a.th href="//www.pizzahut.com" target='_blank'
             = image_tag 'pizza_hut_logo.jpg'
-      h4 We were curious to see what a similar thing would like like for our business.
+      h4 We were curious to see what a similar thing would like like for our businesses.
       .row
         .small-2.column
-          = link_to 'https://github.com/ahtung', class: 'th' do
+          = link_to 'https://github.com/ahtung', target: '_blank', class: 'th' do
             = image_tag 'ahtung_logo.jpeg'
         .small-2.column
-          = link_to 'https://github.com/hoppinger', class: 'th' do
+          = link_to 'https://github.com/hoppinger', target: '_blank', class: 'th' do
             = image_tag 'hoppinger_logo.png'
         .small-2.column
-          = link_to 'https://github.com/wponrails', class: 'th' do
+          = link_to 'https://github.com/wponrails', target: '_blank', class: 'th' do
             = image_tag 'wordpress_logo.png'
         .small-2.column
-          = link_to 'https://github.com/thoughtbot', class: 'th' do
+          = link_to 'https://github.com/thoughtbot', target: '_blank', class: 'th' do
             = image_tag 'thoughtbot.png'
         .small-2.column
-          = link_to 'https://github.com/railsrumble', class: 'th' do
+          = link_to 'https://github.com/railsrumble', target: '_blank', class: 'th' do
             = image_tag 'rails_rumble.png'
         .small-2.column
-          = link_to 'https://github.com/ruby', class: 'th' do
+          = link_to 'https://github.com/ruby', target: '_blank', class: 'th' do
             = image_tag 'ruby_logo.png'
 
       h4 And this is what we got
       p = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
 
       = link_to 'Back', page_path('welcome'), class: 'button tiny secondary'
-      = link_to 'Ahtung', 'http://www.ahtung.co', class: 'button tiny secondary'
+      = link_to 'Ahtung', 'http://www.ahtung.co', class: 'button tiny secondary', target: '_blank'
