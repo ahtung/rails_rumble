@@ -1,20 +1,4 @@
-.row.text-center
-  p#notice= notice
-  - if @organization.previous
-    .small-2.columns
-      = link_to "<", @organization.previous
-    - unless @organization.next
-      .small-8.small-pull-2.columns
-        h1= "#{@organization.name} (#{@year})"
-    - else
-      .small-8.columns
-        h1= "#{@organization.name} (#{@year})"
-  - else
-    .small-8.small-push-2.columns
-      h1= "#{@organization.name} (#{@year})"  
-  - if @organization.next
-    .small-2.columns
-      = link_to ">", @organization.next
+= render 'header'
 
 .row.text-center
   h2= @organization.repos.count

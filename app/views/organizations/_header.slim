@@ -1,0 +1,10 @@
+.row.text-center
+  p#notice= notice
+  - if @organization.previous
+    .small-2.columns
+      = link_to "<", @organization.previous
+  .small-8.columns class=('small-pull-2' unless @organization.next) class=('small-push-2' unless @organization.previous)
+    h1= "#{@organization.name} (#{@year})"
+  - if @organization.next
+    .small-2.columns
+      = link_to ">", @organization.next
