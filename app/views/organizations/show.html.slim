@@ -1,11 +1,11 @@
 .row.text-center
   p#notice= notice
   - if @organization.previous
-    = link_to "<", @organization.previous
-  h1= @organization.name
+    = link_to "<", organization_path(@organization.previous, year: @year)
+  h1= "#{@organization.name} (#{@year})"
   h2= @organization.repos.count
   - if @organization.next
-    = link_to ">", @organization.next
+    = link_to ">", organization_path(@organization.next, year: @year)
   p
     = link_to 'Sync', sync_organization_path(@organization)
     = link_to 'Sign Out', destroy_user_session_path, method: :delete
@@ -26,9 +26,5 @@
   .small-12.columns
     a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" Has Dropdown
     ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
-      li
-        a href="#" 2013
-      li
-        a href="#" 2014
-      li
-        a href="#" 2015
+      - get_years("2011-04-23T19:20:49Z").each do |year|
+        li= link_to year, organization_path(@organization, year: year)
