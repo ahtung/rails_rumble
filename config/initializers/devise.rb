@@ -11,4 +11,5 @@ Devise.setup do |config|
   config.expire_all_remember_me_on_sign_out = true
   config.reset_password_within = 6.hours
   config.sign_out_via = :delete
+  config.omniauth :github, ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], scope: 'user,repo,read:repo_hook,admin:org'
 end
