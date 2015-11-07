@@ -17,6 +17,7 @@ gem 'foreman'
 gem 'foundation-rails'
 gem 'sidekiq'
 gem 'devise'
+gem 'omniauth-github'
 
 group :development, :test do
 end
