@@ -36,12 +36,13 @@ class Organization < ActiveRecord::Base
       members.concat client.last_response.rels[:next].get.data
     end
     members.each do |member|
-      users.where(login: member.login).first_or_create
+      new_user = users.where(login: member.login).first_or_create
+      new_user.update(avatar_url: member.avatar_url)
     end
   end
 
   def employees_of_the_year(year)
-    return [] if commits.blank?
+    return Array.new(12) if commits.blank?
     commits[year].map do |month, monthly_scores|
       best = monthly_scores.reject{|k, v| v == 0 }.max_by{|k,v| v}
       best.nil? ? '' : best.first
