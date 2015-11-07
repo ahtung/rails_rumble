@@ -24,12 +24,12 @@ gem 'octokit'
 gem 'pry-rails'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 3.3.0'
 end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers', '~> 3.0'
+  gem 'shoulda-matchers', '~> 2.8.0', require: false
   gem 'rspec-sidekiq'
 end
 

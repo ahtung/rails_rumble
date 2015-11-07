@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
   # Relations
-  xit { should have_many(:repos).dependent(:destroy) }
-  xit { should have_many(:memberships).dependent(:destroy) }
-  xit { should have_many(:users).through(:memberships) }
+  it { should have_many(:repos).dependent(:destroy) }
+  it { should have_many(:memberships).dependent(:destroy) }
+  it { should have_many(:users).through(:memberships) }
 
   # Instance methods
   describe '#' do

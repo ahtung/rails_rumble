@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   # Relations
-  xit { should have_many(:organizations_users).dependent(:destroy) }
-  xit { should have_many(:organizations).through(:organizations_users) }
-  xit { should have_many(:users_repos).dependent(:destroy) }
-  xit { should have_many(:repos).through(:users_repos) }
+  it { should have_many(:memberships).dependent(:destroy) }
+  it { should have_many(:organizations).through(:memberships) }
+  it { should have_many(:repos_users).dependent(:destroy) }
+  it { should have_many(:repos).through(:repos_users) }
 end
