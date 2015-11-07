@@ -7,7 +7,7 @@
     .small-2.columns.org-navigation
       = link_to "<", @organization.previous, class: 'button tiny'
   .small-8.columns class=('small-pull-2' unless @organization.next) class=('small-push-2' unless @organization.previous)
-    h1
+    h1.text-center
       = "#{@organization.name} (#{@year})"
     p = link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny'
   - if @organization.next
