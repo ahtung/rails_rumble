@@ -22,7 +22,7 @@ $ ->
     $("span.meter").css('width', "#{perc}%")
 
     member_pos = find_member_pos(task)
-    $("#slider-#{parseInt(task.message) - 1}").trigger("orbit.stop").trigger("orbit.goto", member_pos);
+    $("#slider-#{parseInt(task.message) - 1}").trigger("orbit.stop").trigger("orbit.goto", member_pos)
   )
 
   find_member_pos = (task) ->
