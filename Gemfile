@@ -22,6 +22,9 @@ gem 'devise'
 gem 'omniauth-github'
 gem 'octokit'
 gem 'pry-rails'
+gem 'websocket-rails'
+gem 'websocket-driver', '0.6.2'
+gem 'faye-websocket', '0.10.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.3.0'
