@@ -12,5 +12,10 @@ class User < ActiveRecord::Base
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end
+    fetch_organizations!
+  end
+
+  def fetch_organizations!
+    Organization.create(name: 'First Organization')
   end
 end
