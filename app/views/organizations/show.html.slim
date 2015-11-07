@@ -11,14 +11,14 @@
 .row
   ul.small-block-grid-1.medium-block-grid-3
     - @organization.employees_of_the_year(@year.to_i).each_with_index do |employee, index|
-      li
+      li.text-center
         - if employee != ''
           p= employee
           = image_tag User.find_by(login: employee).avatar_url, class: 'th'
         - else
           p N/A
           = image_tag 'http://placehold.it/460x460', class: 'th'
-        p= "#{sprintf '%02d', index + 1} #{Date::MONTHNAMES[index + 1]}"
+        p.text-left= "#{sprintf '%02d', index + 1} #{Date::MONTHNAMES[index + 1]}"
 
 .row
   .small-12.columns
