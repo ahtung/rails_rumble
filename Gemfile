@@ -14,6 +14,7 @@ gem 'slim-rails'
 gem 'high_voltage', '~> 2.4.0'
 gem 'puma'
 gem 'foreman'
+gem 'foundation-rails'
 
 group :development, :test do
 end
