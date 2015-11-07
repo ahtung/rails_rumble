@@ -1,7 +1,42 @@
 class OrganizationSyncer
   include Sidekiq::Worker
 
-  def perform(id)
-    puts 'YEY'
+  def perform(id, year)
+    organization = Organization.find(id)
+    organization.fetch_repos!
+
+    for month in 1..12 do
+      beginning_of_month = Date.new(year, month, 1).beginning_of_month
+      end_of_month = Date.new(year, month, 1).end_of_month
+
+      organization.repos.each do |repo|
+        organization_members = {}
+        contributors = repo.contributors
+        next if contributors.blank?
+        contributor_names = contributors.map(&:login)
+        contributor_names.each do |contributor|
+          puts "#{organization.name}/#{repo.name}"
+          # begin
+          #   commits = client.commits(
+          #     "#{organization.name}/#{repo.name}",
+          #     author: contributor,
+          #     since: beginning_of_month,
+          #     until: end_of_month,
+          #     per_page: 100
+          #   )
+          #   while client.last_response.rels[:next]
+          #     commits.concat client.last_response.rels[:next].get.data
+          #   end
+          #   if scores[year][month][member]
+          #     scores[year][month][member] += commits.count
+          #   else
+          #     scores[year][month].merge!(member => commits.count)
+          #   end
+          # rescue
+          # end
+        end
+      end
+    end
+
   end
 end
