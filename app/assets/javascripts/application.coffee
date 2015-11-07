@@ -5,15 +5,14 @@
 #= require bxslider-4
 
 $ ->
-  $(document).foundation(
-    orbit: {
-      navigation_arrows: false,
-      slide_number: false,
-      pause_on_hover: false,
-      swipe: false,
-      bullets: false
-    }
-  )
+  $(document).foundation()
+  $('.bxslider').bxSlider({
+    auto: true,
+    speed: 300,
+    controls: false,
+    pager: false,
+    captions: true
+  });
 
   dispatcher = new WebSocketRails('localhost:3000/websocket')
   channel = dispatcher.subscribe('sync')
@@ -22,7 +21,7 @@ $ ->
     $("span.meter").css('width', "#{perc}%")
 
     member_pos = find_member_pos(task)
-    $("#slider-#{parseInt(task.message) - 1}").trigger("orbit.stop").trigger("orbit.goto", member_pos)
+    $("#slider-#{parseInt(task.message) - 1}").goToSlide(member_pos)
   )
 
   find_member_pos = (task) ->
