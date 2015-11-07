@@ -1,12 +1,15 @@
+- if notice
+  div data-alert="true" class='alert-box'
+    = notice
+    a href='#' class='close' &times;
 .row.text-center
-  p#notice= notice
   - if @organization.previous
     .small-2.columns
       = link_to "<", @organization.previous
   .small-8.columns class=('small-pull-2' unless @organization.next) class=('small-push-2' unless @organization.previous)
     h1
       = "#{@organization.name} (#{@year})"
-      = link_to 's', sync_organization_path(@organization)
+    p = link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny'
   - if @organization.next
     .small-2.columns
       = link_to ">", @organization.next
