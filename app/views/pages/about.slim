@@ -7,13 +7,14 @@
       h3 From one of these
       .row
         .small-4.column
-          = image_tag 'mc_logo.png'
+          a.th href="//www.mcdonalds.com" target='_blank'
+            = image_tag 'mc_logo.png'
         .small-4.column
-          = image_tag 'kfc_logo.png'
+          a.th href="//www.kfc.com" target='_blank'
+            = image_tag 'kfc_logo.png'
         .small-4.column
-          = image_tag 'pizza_hut_logo.jpg'
+          a.th href="//www.pizzahut.com" target='_blank'
+            = image_tag 'pizza_hut_logo.jpg'
 
       = link_to 'Back', page_path('welcome'), class: 'button tiny secondary'
       = link_to 'Ahtung', 'http://www.ahtung.co', class: 'button tiny secondary'
-
-
