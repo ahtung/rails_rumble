@@ -4,6 +4,14 @@ class Organization < ActiveRecord::Base
   has_many :employees, through: :employees_organizations
   has_many :repos, dependent: :destroy
 
+  def previous
+    self.class.where(["id < ?", id]).last
+  end
+
+  def next
+    self.class.where(["id > ?", id]).first
+  end
+
   def sync!(year)
     OrganizationSyncer.perform_async(id, year)
   end

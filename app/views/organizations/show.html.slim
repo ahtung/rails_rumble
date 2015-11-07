@@ -1,7 +1,12 @@
 .row.text-center
   p#notice= notice
+  - if @organization.previous
+    = link_to "<", @organization.previous
   h1= @organization.name
-  = link_to 'Sync', sync_organization_path(@organization)
+  - if @organization.next
+    = link_to ">", @organization.next
+  p
+    = link_to 'Sync', sync_organization_path(@organization)
 
 .row
   ul.small-block-grid-1.medium-block-grid-3
