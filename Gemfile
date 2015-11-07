@@ -17,7 +17,6 @@ gem 'foreman'
 gem 'foundation-rails'
 gem 'sidekiq'
 gem 'devise'
-gem 'high_voltage', '~> 2.4.0'
 
 group :development, :test do
 end
