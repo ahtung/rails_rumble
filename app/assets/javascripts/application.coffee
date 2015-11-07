@@ -6,7 +6,12 @@
 $ ->
   $(document).foundation(
     orbit: {
-      timer_speed: 1000
+      timer_speed: 230,
+      navigation_arrows: false,
+      slide_number: false,
+      pause_on_hover: false,
+      swipe: false,
+      bullets: false
     }
   )
 
