@@ -1,7 +1,7 @@
 class OrganizationSyncer
   include Sidekiq::Worker
 
-  def perform
+  def perform(id)
     puts 'YEY'
   end
 end

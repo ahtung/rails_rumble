@@ -5,6 +5,7 @@ class OrganizationsController < ApplicationController
   end
 
   def sync
+    @organization.sync!
     redirect_to @organization, notice: 'OO'
   end
 
