@@ -1,5 +1,6 @@
 class OrganizationSyncer
   include Sidekiq::Worker
+  sidekiq_options retry: false
 
   def perform(id, year)
     organization = Organization.find(id)
@@ -13,7 +14,7 @@ class OrganizationSyncer
         organization_members = {}
         contributors = repo.contributors
         next if contributors.blank?
-        contributor_names = contributors.map(&:login)
+        contributor_names = contributors.map(&:name)
         contributor_names.each do |contributor|
           puts "#{organization.name}/#{repo.name}"
           # begin

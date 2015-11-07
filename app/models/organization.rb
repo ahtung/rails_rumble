@@ -9,7 +9,7 @@ class Organization < ActiveRecord::Base
   end
 
   def fetch_repos!
-    repos.create
+    repos.create(name: 'test')
   end
 
   def employees_of_the_year(year)
