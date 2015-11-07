@@ -16,7 +16,7 @@
 
 .row
   ul.small-block-grid-1.medium-block-grid-3
-    - @organization.employees_of_the_year(2015).each_with_index do |employee, index|
+    - @organization.employees_of_the_year(@year.to_i).each_with_index do |employee, index|
       li
         p= employee
         = image_tag 'http://placehold.it/350x300', class: 'th'
@@ -26,5 +26,5 @@
   .small-12.columns
     a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" Has Dropdown
     ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
-      - get_years("2011-04-23T19:20:49Z").each do |year|
+      - get_years(@organization.est_at).each do |year|
         li= link_to year, organization_path(@organization, year: year)

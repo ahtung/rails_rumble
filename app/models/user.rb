@@ -22,13 +22,13 @@ class User < ActiveRecord::Base
 
   def fetch_organizations!
     user = client.user
-    user.login
     orgs = user.rels[:organizations].get.data
     while client.last_response.rels[:next]
       orgs.concat client.last_response.rels[:next].get.data
     end
     orgs.each do |org|
-      organizations.where(name: org.login).first_or_create
+      org_data = client.organization(org.login)
+      organizations.where(name: org.login).first_or_create.update(est_at: org_data.created_at)
     end
   end
 
