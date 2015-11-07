@@ -29,19 +29,9 @@ class Organization < ActiveRecord::Base
   end
 
   def employees_of_the_year(year)
-    [
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      '',
-      ''
-    ]
+    eval(commits)[year].map do |month, monthly_scores|
+      best = monthly_scores.max_by{|k,v| v}
+      best.first
+    end
   end
 end

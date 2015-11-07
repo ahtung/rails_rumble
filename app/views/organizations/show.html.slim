@@ -16,8 +16,9 @@
 
 .row
   ul.small-block-grid-1.medium-block-grid-3
-    - @organization.employees_of_the_year(2014).each_with_index do |employee, index|
+    - @organization.employees_of_the_year(2015).each_with_index do |employee, index|
       li
+        p= employee
         = image_tag 'http://placehold.it/350x300', class: 'th'
         p= Date::MONTHNAMES[index + 1]
 

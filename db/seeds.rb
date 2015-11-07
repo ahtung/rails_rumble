@@ -1,3 +1,5 @@
 Organization.delete_all
 User.delete_all
 Repo.delete_all
+ReposUser.delete_all
+Membership.delete_all

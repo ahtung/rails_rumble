@@ -3,6 +3,22 @@ class OrganizationSyncer
   sidekiq_options retry: false
 
   def perform(id, year, user_id)
+    yearly = {
+      year => {
+        1  => {},
+        2  => {},
+        3  => {},
+        4  => {},
+        5  => {},
+        6  => {},
+        7  => {},
+        8  => {},
+        9  => {},
+        10 => {},
+        11 => {},
+        12 => {}
+      }
+    }
     user = User.find(user_id)
     organization = Organization.find(id)
     organization.fetch_repos_as_user!(user)
@@ -15,30 +31,31 @@ class OrganizationSyncer
         repo.fetch_contributors_as_user!(user)
         next if repo.users.blank?
         contributor_names = repo.users.map(&:login)
-        # puts contributor_names.count
         contributor_names.each do |contributor|
-          puts "contributor #{contributor}"
-          # puts "#{organization.name}/#{repo.name}"
+          puts "#{organization.name}/#{repo.name}"
           # begin
-          #   commits = client.commits(
-          #     "#{organization.name}/#{repo.name}",
-          #     author: contributor,
-          #     since: beginning_of_month,
-          #     until: end_of_month,
-          #     per_page: 100
-          #   )
-          #   while client.last_response.rels[:next]
-          #     commits.concat client.last_response.rels[:next].get.data
-          #   end
-          #   if scores[year][month][member]
-          #     scores[year][month][member] += commits.count
-          #   else
-          #     scores[year][month].merge!(member => commits.count)
-          #   end
+            commits = user.client.commits(
+              "#{organization.name}/#{repo.name}",
+              author: contributor,
+              since: beginning_of_month,
+              until: end_of_month,
+              per_page: 100
+            )
+            while user.client.last_response.rels[:next]
+              commits.concat user.client.last_response.rels[:next].get.data
+            end
+
+            if yearly[year][month][contributor]
+              yearly[year][month][contributor] += commits.count
+            else
+              yearly[year][month].merge!(contributor => commits.count)
+            end
+            puts yearly.inspect
           # rescue
           # end
         end
       end
+      organization.update_attribute(:commits, yearly)
     end
   end
 end

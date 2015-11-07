@@ -13,7 +13,6 @@ class Repo < ActiveRecord::Base
     return if contributors == ''
     users.delete_all
     contributors.each do |contributor|
-      puts contributor.login
       user = User.where(login: contributor.login).first_or_create do |user|
         user.provider = 'github'
         user.uid = contributor.id
