@@ -16,11 +16,15 @@ gem 'puma'
 gem 'foreman'
 gem 'foundation-rails'
 gem 'sidekiq'
+gem 'factory_girl_rails'
+gem 'faker'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
-  gem 'shoulda-matchers'
 end
 
-group :development do
+group :test do
+  gem 'simplecov', require: false
+  gem 'shoulda-matchers'
+  gem 'rspec-sidekiq'
 end
