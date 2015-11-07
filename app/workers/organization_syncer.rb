@@ -1,6 +1,6 @@
 class OrganizationSyncer
   include Sidekiq::Worker
-  sidekiq_options retry: false
+  sidekiq_options retry: false, unique: true, expires_in: 1.hour
 
   def perform(id, year, user_id)
     yearly = {
