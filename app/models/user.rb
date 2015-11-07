@@ -7,17 +7,26 @@ class User < ActiveRecord::Base
          :omniauthable
 
   def self.from_omniauth(auth)
-    signed_user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end
-    signed_user.fetch_organizations!
-    signed_user
   end
 
   def fetch_organizations!
-    organizations.create(name: 'First Organization')
+    user = client.user
+    user.login
+    orgs = user.rels[:organizations].get.data
+    organization_names = orgs.map { |org| { name: org.login } }
+    organizations.create(organization_names)
+  end
+
+  private
+
+  def client
+    return if oauth_token.nil?
+    @client ||= Octokit::Client.new(access_token: oauth_token)
   end
 end
