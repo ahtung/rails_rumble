@@ -298,7 +298,7 @@ DEPENDENCIES
   rspec-sidekiq
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
-  shoulda-matchers
+  shoulda-matchers (~> 3.0)
   sidekiq
   simplecov
   slim-rails

@@ -29,7 +29,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers', '~> 3.0'
   gem 'rspec-sidekiq'
 end
 
