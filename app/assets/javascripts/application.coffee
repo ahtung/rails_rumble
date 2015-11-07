@@ -16,3 +16,5 @@ $ ->
     perc = parseInt(task.message) * 100 / 12
     $("span.meter").css('width', "#{perc}%")
   )
+
+  $(".alert-box").delay(1500).fadeOut "slow"
