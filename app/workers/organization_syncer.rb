@@ -24,9 +24,6 @@ class OrganizationSyncer
     organization.fetch_repos_as_user!(user)
 
     for month in 1..12 do
-      new_message = { message: month }
-      WebsocketRails[:sync].trigger('syncer', new_message)
-
       beginning_of_month = Date.new(year, month, 1).beginning_of_month
       end_of_month = Date.new(year, month, 1).end_of_month
 
@@ -35,8 +32,7 @@ class OrganizationSyncer
         next if repo.users.blank?
         contributor_names = repo.users.map(&:login)
         contributor_names.each do |contributor|
-          puts "#{organization.name}/#{repo.name}"
-          # begin
+          begin
             commits = user.client.commits(
               "#{organization.name}/#{repo.name}",
               author: contributor,
@@ -54,10 +50,13 @@ class OrganizationSyncer
               yearly[year][month].merge!(contributor => commits.count)
             end
             puts yearly.inspect
-          # rescue
-          # end
+          rescue
+          end
         end
       end
+
+      new_message = { month: month, member: yearly[year][month].max_by{|k,v| v} }
+      WebsocketRails[:sync].trigger('syncer', new_message)
       organization.update_attribute(:commits, yearly)
     end
   end
