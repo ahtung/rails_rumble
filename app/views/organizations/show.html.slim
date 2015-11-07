@@ -1,6 +1,6 @@
 .row.text-center
   p#notice= notice
-  h1= @organization.name
+  h1= "#{@organization.name} (#{@year})"
   = link_to 'Sync', sync_organization_path(@organization)
 
 .row
@@ -14,9 +14,5 @@
   .small-12.columns
     a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" Has Dropdown
     ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
-      li
-        a href="#" 2013
-      li
-        a href="#" 2014
-      li
-        a href="#" 2015
+      - get_years("2011-04-23T19:20:49Z").each do |year|
+        li= link_to year, organization_path(@organization, year: year)
