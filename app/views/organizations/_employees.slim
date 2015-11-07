@@ -1,9 +1,6 @@
-- if organization.commits.blank?
-  ul data-orbit=true
-    - organization.users.each do |user|
-      li
-        = image_tag user.avatar_url
-        .orbit-caption
-          = user.login
-- else
-  = render 'employees_li', employee: employee, index: index
+ul data-orbit=true data-options="animation_speed:#{rand(3) * 1000};" id="slider-#{index}"
+  - organization.users.each do |user|
+    li
+      = image_tag user.avatar_url
+      .orbit-caption
+        = user.login
