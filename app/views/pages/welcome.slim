@@ -2,8 +2,5 @@
   .small-6.columns.small-centered
     = image_tag 'http://lorempixel.com/600/400/sports/1/'
     .text-center
-      h1 Eleman
+      h1= link_to '~ Eleman ~', page_path('about')
       = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
-      = link_to 'About', page_path('about'), class: 'button tiny secondary'
-
-
