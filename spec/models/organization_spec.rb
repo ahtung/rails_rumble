@@ -13,6 +13,12 @@ RSpec.describe Organization, type: :model do
   describe '#' do
     let(:organization) { create(:organization) }
 
+    describe 'next' do
+    end
+
+    describe 'previous' do
+    end
+
     describe 'sync!' do
       it 'should queue a OrganizationSyncer' do
         organization.sync!(2014)
