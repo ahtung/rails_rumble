@@ -5,14 +5,13 @@
 
 $ ->
   $(document).foundation(
-    # orbit: {
-    #   timer_speed: 230,
-    #   navigation_arrows: false,
-    #   slide_number: false,
-    #   pause_on_hover: false,
-    #   swipe: false,
-    #   bullets: false
-    # }
+    orbit: {
+      navigation_arrows: false,
+      slide_number: false,
+      pause_on_hover: false,
+      swipe: false,
+      bullets: false
+    }
   )
 
   dispatcher = new WebSocketRails('localhost:3000/websocket')
