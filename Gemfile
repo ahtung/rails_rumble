@@ -18,6 +18,7 @@ gem 'foundation-rails'
 gem 'sidekiq'
 
 group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
 end
 
 group :development do
