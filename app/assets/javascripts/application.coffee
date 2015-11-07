@@ -7,6 +7,11 @@
 $ ->
   $(document).foundation()
 
+  find_member_pos = (task) ->
+    member_name = task.member[0]
+    list_item = $("img[title='#{member_name}']").first().parent()
+    return $("#slider-0").find('li').index(list_item)
+
   sliders = []
   $('.bxslider').each (i, obj) ->
     sliders[i] = $(this).bxSlider(
@@ -17,7 +22,17 @@ $ ->
       pager: false,
       captions: true
     )
-    sliders[i].startAuto()
+
+    if sliders[i].data('complete')
+      sliders[i].stopAuto()
+      member_pos = find_member_pos(
+        member: [sliders[i].data('best'), -1]
+      )
+      if member_pos != -1
+        sliders[i].goToSlide(member_pos + 1)
+    else
+      sliders[i].startAuto()
+
 
 
   dispatcher = new WebSocketRails('localhost:3000/websocket')
@@ -29,12 +44,7 @@ $ ->
     member_pos = find_member_pos(task)
     if member_pos != -1
       sliders[parseInt(task.month) - 1].stopAuto()
-      sliders[parseInt(task.month) - 1].goToSlide(member_pos)
+      sliders[parseInt(task.month) - 1].goToSlide(member_pos + 1)
   )
-
-  find_member_pos = (task) ->
-    member_name = task.member[0]
-    list_item = $("img[title='#{member_name}']").first().parent()
-    return $("#slider-0").find('li').index(list_item)
 
   $(".alert-box").delay(1500).fadeOut "slow"
