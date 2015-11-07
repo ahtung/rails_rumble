@@ -3,6 +3,8 @@ class Organization < ActiveRecord::Base
   has_many :employees_organizations, dependent: :destroy
   has_many :employees, through: :employees_organizations
   has_many :repos, dependent: :destroy
+  has_many :memberships
+  has_many :users, through: :memberships
 
   def sync!(year)
     OrganizationSyncer.perform_async(id, year)
