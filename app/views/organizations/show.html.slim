@@ -1,7 +1,50 @@
 p#notice= notice
-
-p
-  strong Name:
-  = @organization.name
-
+= @organization.name
 = link_to 'Sync', sync_organization_path(@organization)
+
+.row
+  - @organization.employees_of_the_year(2014).each_with_index do |employee, index|
+    .small-12.medium-3.columns.label-container
+      div class=['row', "label-row-#{index}"]
+        .small-4.columns No 2
+        .small-8.columns Image 2 Title
+      p= Date::MONTHNAMES[index + 1]
+
+scss:
+  .label-row-0 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-1 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-2 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-3 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-4 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-5 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-6 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-7 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-8 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-9 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-10 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  .label-row-11 {
+    background-image: url(http://placehold.it/350x150)
+  }
+  
