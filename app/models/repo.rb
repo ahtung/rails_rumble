@@ -17,6 +17,7 @@ class Repo < ActiveRecord::Base
         user.provider = 'github'
         user.uid = contributor.id
         user.password = Devise.friendly_token[0,20]
+        user.avatar_url = contributor.avatar_url
       end
       users << user unless users.include?(user)
     end

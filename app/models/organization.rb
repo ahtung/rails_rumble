@@ -33,8 +33,8 @@ class Organization < ActiveRecord::Base
   def employees_of_the_year(year)
     return [] if commits.blank?
     commits[year].map do |month, monthly_scores|
-      best = monthly_scores.max_by{|k,v| v}
-      best.first
+      best = monthly_scores.reject{|k, v| v == 0 }.max_by{|k,v| v}
+      best.nil? ? '' : best.first
     end
   end
 end

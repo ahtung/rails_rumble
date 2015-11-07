@@ -1,11 +1,24 @@
 .row.text-center
   p#notice= notice
   - if @organization.previous
-    = link_to "<", @organization.previous
-  h1= "#{@organization.name} (#{@year})"
-  h2= @organization.repos.count
+    .small-2.columns
+      = link_to "<", @organization.previous
+    - unless @organization.next
+      .small-8.small-pull-2.columns
+        h1= "#{@organization.name} (#{@year})"
+    - else
+      .small-8.columns
+        h1= "#{@organization.name} (#{@year})"
+  - else
+    .small-8.small-push-2.columns
+      h1= "#{@organization.name} (#{@year})"  
   - if @organization.next
-    = link_to ">", @organization.next
+    .small-2.columns
+      = link_to ">", @organization.next
+
+.row.text-center
+  h2= @organization.repos.count
+  
   p
     = link_to 'Sync', sync_organization_path(@organization)
     = link_to 'Sign Out', destroy_user_session_path, method: :delete
@@ -18,8 +31,12 @@
   ul.small-block-grid-1.medium-block-grid-3
     - @organization.employees_of_the_year(@year.to_i).each_with_index do |employee, index|
       li
-        p= employee
-        = image_tag 'http://placehold.it/350x300', class: 'th'
+        - if employee != ''
+          p= employee
+          = image_tag User.find_by(login: employee).avatar_url, class: 'th'
+        - else
+          p N/A
+          = image_tag 'http://placehold.it/460x460', class: 'th'
         p= Date::MONTHNAMES[index + 1]
 
 .row
