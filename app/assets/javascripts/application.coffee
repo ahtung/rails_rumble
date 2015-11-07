@@ -6,13 +6,19 @@
 
 $ ->
   $(document).foundation()
-  $('.bxslider').bxSlider({
-    auto: true,
-    speed: 300,
-    controls: false,
-    pager: false,
-    captions: true
-  });
+
+  sliders = []
+  $('.bxslider').each (i, obj) ->
+    sliders[i] = $(this).bxSlider(
+      auto: false,
+      speed: 200,
+      pause: 500,
+      controls: false,
+      pager: false,
+      captions: true
+    )
+    sliders[i].startAuto()
+
 
   dispatcher = new WebSocketRails('localhost:3000/websocket')
   channel = dispatcher.subscribe('sync')
@@ -21,15 +27,14 @@ $ ->
     $("span.meter").css('width', "#{perc}%")
 
     member_pos = find_member_pos(task)
-    $("#slider-#{parseInt(task.message) - 1}").goToSlide(member_pos)
+    if member_pos != -1
+      sliders[parseInt(task.month) - 1].stopAuto()
+      sliders[parseInt(task.month) - 1].goToSlide(member_pos)
   )
 
   find_member_pos = (task) ->
     member_name = task.member[0]
-    console.log(member_name)
-    list_item = $(".orbit-caption:contains('#{member_name}')").first().parent()
-    console.log(list_item)
-    console.log($("#slider-0").find('li').index(list_item))
+    list_item = $("img[title='#{member_name}']").first().parent()
     return $("#slider-0").find('li').index(list_item)
 
   $(".alert-box").delay(1500).fadeOut "slow"
