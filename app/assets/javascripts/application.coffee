@@ -2,6 +2,7 @@
 #= require jquery_ujs
 #= require foundation
 #= require websocket_rails/main
+#= require bxslider-4
 
 $ ->
   $(document).foundation(
