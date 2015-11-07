@@ -20,6 +20,8 @@ gem 'factory_girl_rails'
 gem 'faker'
 gem 'devise'
 gem 'omniauth-github'
+gem 'octokit'
+gem 'pry-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
@@ -27,12 +29,12 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', '~> 3.0'
   gem 'rspec-sidekiq'
 end
 
 group :development do
-  gem "better_errors"
+  gem 'better_errors'
   gem 'binding_of_caller'
 end
 

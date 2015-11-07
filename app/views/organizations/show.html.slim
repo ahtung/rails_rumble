@@ -1,28 +1,28 @@
+= render 'header'
+= render 'repo_info'
 .row.text-center
-  p#notice= notice
-  - if @organization.previous
-    = link_to "<", @organization.previous
-  h1= @organization.name
-  - if @organization.next
-    = link_to ">", @organization.next
   p
-    = link_to 'Sync', sync_organization_path(@organization)
     = link_to 'Sign Out', destroy_user_session_path, method: :delete
+  
+.row
+  .progress.small-12
+    span.meter style="width: 40%"
 
 .row
   ul.small-block-grid-1.medium-block-grid-3
-    - @organization.employees_of_the_year(2014).each_with_index do |employee, index|
+    - @organization.employees_of_the_year(@year.to_i).each_with_index do |employee, index|
       li
-        = image_tag 'http://placehold.it/350x300', class: 'th'
+        - if employee != ''
+          p= employee
+          = image_tag User.find_by(login: employee).avatar_url, class: 'th'
+        - else
+          p N/A
+          = image_tag 'http://placehold.it/460x460', class: 'th'
         p= Date::MONTHNAMES[index + 1]
 
 .row
   .small-12.columns
     a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" Has Dropdown
     ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
-      li
-        a href="#" 2013
-      li
-        a href="#" 2014
-      li
-        a href="#" 2015
+      - get_years(@organization.est_at).each do |year|
+        li= link_to year, organization_path(@organization, year: year)
