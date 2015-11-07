@@ -1,0 +1,10 @@
+- if organization.commits.blank?
+  ul data-orbit=true
+    = debug organization.users.count
+    - organization.users.each do |user|
+      li
+        = image_tag user.avatar_url
+        .orbit-caption
+          = user.login
+- else
+  = render 'employees_li', employee: employee, index: index

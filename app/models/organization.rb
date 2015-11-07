@@ -30,6 +30,16 @@ class Organization < ActiveRecord::Base
     end
   end
 
+  def fetch_members_for!(org, client)
+    members = org.rels[:members].get.data
+    while client.last_response.rels[:next]
+      members.concat client.last_response.rels[:next].get.data
+    end
+    members.each do |member|
+      users.where(login: member.login).first_or_create
+    end
+  end
+
   def employees_of_the_year(year)
     return [] if commits.blank?
     commits[year].map do |month, monthly_scores|

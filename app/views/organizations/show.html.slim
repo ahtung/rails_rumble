@@ -12,13 +12,7 @@
   ul.small-block-grid-1.medium-block-grid-3
     - @organization.employees_of_the_year(@year.to_i).each_with_index do |employee, index|
       li
-        - if employee != ''
-          p= employee
-          = image_tag User.find_by(login: employee).avatar_url, class: 'th'
-        - else
-          p N/A
-          = image_tag 'http://placehold.it/460x460', class: 'th'
-        p= Date::MONTHNAMES[index + 1]
+        = render 'employees', organization: @organization, employee: employee, index: index
 
 .row
   .small-12.columns

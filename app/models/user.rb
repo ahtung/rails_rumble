@@ -28,7 +28,9 @@ class User < ActiveRecord::Base
     end
     orgs.each do |org|
       org_data = client.organization(org.login)
-      organizations.where(name: org.login).first_or_create.update(est_at: org_data.created_at)
+      new_org = organizations.where(name: org.login).first_or_create
+      new_org.update(est_at: org_data.created_at)
+      new_org.fetch_members_for!(org, client)
     end
   end
 

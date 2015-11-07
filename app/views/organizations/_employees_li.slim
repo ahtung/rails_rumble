@@ -1,0 +1,7 @@
+- if employee != ''
+  p= employee
+  = image_tag User.find_by(login: employee).avatar_url, class: 'th'
+- else
+  p N/A
+  = image_tag 'http://placehold.it/460x460', class: 'th'
+p= Date::MONTHNAMES[index + 1]
