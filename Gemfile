@@ -29,12 +29,12 @@ end
 
 group :test do
   gem 'simplecov', require: false
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'rspec-sidekiq'
 end
 
 group :development do
-  gem "better_errors"
+  gem 'better_errors'
   gem 'binding_of_caller'
 end
 

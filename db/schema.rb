@@ -11,33 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107040757) do
+ActiveRecord::Schema.define(version: 20151107054233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "employees", force: :cascade do |t|
-    t.string   "name"
-    t.string   "avatar"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "employees_organizations", id: false, force: :cascade do |t|
-    t.integer "employee_id"
-    t.integer "organization_id"
-  end
-
-  add_index "employees_organizations", ["employee_id"], name: "index_employees_organizations_on_employee_id", using: :btree
-  add_index "employees_organizations", ["organization_id"], name: "index_employees_organizations_on_organization_id", using: :btree
-
-  create_table "employees_repos", id: false, force: :cascade do |t|
-    t.integer "employee_id"
-    t.integer "repo_id"
-  end
-
-  add_index "employees_repos", ["employee_id"], name: "index_employees_repos_on_employee_id", using: :btree
-  add_index "employees_repos", ["repo_id"], name: "index_employees_repos_on_repo_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -59,6 +36,14 @@ ActiveRecord::Schema.define(version: 20151107040757) do
     t.string   "name"
   end
 
+  create_table "repos_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "repo_id"
+  end
+
+  add_index "repos_users", ["repo_id"], name: "index_repos_users_on_repo_id", using: :btree
+  add_index "repos_users", ["user_id"], name: "index_repos_users_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -75,6 +60,7 @@ ActiveRecord::Schema.define(version: 20151107040757) do
     t.string   "provider"
     t.string   "uid"
     t.string   "oauth_token"
+    t.string   "login"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

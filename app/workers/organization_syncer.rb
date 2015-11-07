@@ -13,6 +13,7 @@ class OrganizationSyncer
 
       organization.repos.each do |repo|
         organization_members = {}
+        repo.fetch_contributors_as_user!(user)
         contributors = repo.contributors
         next if contributors.blank?
         contributor_names = contributors.map(&:name)
@@ -39,6 +40,5 @@ class OrganizationSyncer
         end
       end
     end
-
   end
 end

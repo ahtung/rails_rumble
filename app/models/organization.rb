@@ -1,9 +1,7 @@
 class Organization < ActiveRecord::Base
   # Relations
-  has_many :employees_organizations, dependent: :destroy
-  has_many :employees, through: :employees_organizations
   has_many :repos, dependent: :destroy
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
 
   def previous
@@ -20,6 +18,7 @@ class Organization < ActiveRecord::Base
 
   def fetch_repos_as_user!(user)
     client = user.client
+    return if client.nil?
     reps = client.repos(name)
     while client.last_response.rels[:next]
       reps.concat client.last_response.rels[:next].get.data
