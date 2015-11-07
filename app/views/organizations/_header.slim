@@ -4,7 +4,9 @@
     .small-2.columns
       = link_to "<", @organization.previous
   .small-8.columns class=('small-pull-2' unless @organization.next) class=('small-push-2' unless @organization.previous)
-    h1= "#{@organization.name} (#{@year})"
+    h1
+      = "#{@organization.name} (#{@year})"
+      = link_to 's', sync_organization_path(@organization)
   - if @organization.next
     .small-2.columns
       = link_to ">", @organization.next
