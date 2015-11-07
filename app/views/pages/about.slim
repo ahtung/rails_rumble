@@ -7,11 +7,14 @@
       h3 From one of these
       .row
         .small-4.column
-          = image_tag 'mc_logo.png'
+          a.th href="//www.mcdonalds.com" target='_blank'
+            = image_tag 'mc_logo.png'
         .small-4.column
-          = image_tag 'kfc_logo.png'
+          a.th href="//www.kfc.com" target='_blank'
+            = image_tag 'kfc_logo.png'
         .small-4.column
-          = image_tag 'pizza_hut_logo.jpg'
+          a.th href="//www.pizzahut.com" target='_blank'
+            = image_tag 'pizza_hut_logo.jpg'
       h4 We were curious to see what a similar thing would like like for our business.
       .row
         .small-2.column
@@ -34,10 +37,7 @@
             = image_tag 'ruby_logo.png'
 
       h4 And this is what we got
-
-      = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
+      p = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
 
       = link_to 'Back', page_path('welcome'), class: 'button tiny secondary'
       = link_to 'Ahtung', 'http://www.ahtung.co', class: 'button tiny secondary'
-
-
