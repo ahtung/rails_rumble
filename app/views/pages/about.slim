@@ -36,8 +36,14 @@
           = link_to 'https://github.com/ruby', target: '_blank', class: 'th' do
             = image_tag 'ruby_logo.png'
 
-      h4 And this is what we got
-      p = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
+      h4 ... and this is what we got, give it a try
+      .row
+        p = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
+      
+      h4 made by
+      .row
+        = link_to "//www.ahtung.co", class: 'th button tiny secondary' do
+          = image_tag 'ruby_logo.png'
 
       = link_to 'Back', page_path('welcome'), class: 'button tiny secondary'
-      = link_to 'Ahtung', 'http://www.ahtung.co', class: 'button tiny secondary', target: '_blank'
+      
