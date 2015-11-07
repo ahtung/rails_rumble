@@ -1,5 +1,5 @@
-/ - complete = false unless organization.commits[@year]
-/ - complete = (organization.commits[@year][index+1].count == organization.users.count) if organization.commits[@year]
+- complete = false unless organization.commits[@year]
+- complete = (organization.commits[@year][index+1].count == organization.users.count) if organization.commits[@year]
 / - na = false
 / - if complete
 /   - if na
@@ -10,15 +10,13 @@
 /           = 'N/A'
 /   - else
 /     ul data-orbit=true data-options="timer=false;" id="slider-#{index}"
-/       - organization.users.each do |user|  
+/       - organization.users.each do |user|
 /         li
 /           = image_tag user.avatar_url
 /           .orbit-caption
 /             = user.login
 / - else
-/   ul data-orbit=true data-options="animation_speed=200;timer_speed=200;timer=true" id="slider-#{index}"
-/     - organization.users.each do |user|  
-/       li
-/         = image_tag user.avatar_url
-/         .orbit-caption
-/           = user.login
+ul class="bxslider" id="slider-#{index}"
+  - organization.users.each do |user|
+    li
+      = image_tag user.avatar_url, title: user.login
