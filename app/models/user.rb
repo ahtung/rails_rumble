@@ -7,16 +7,17 @@ class User < ActiveRecord::Base
          :omniauthable
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    signed_user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
     end
-    fetch_organizations!
+    signed_user.fetch_organizations!
+    signed_user
   end
 
   def fetch_organizations!
-    Organization.create(name: 'First Organization')
+    organizations.create(name: 'First Organization')
   end
 end
