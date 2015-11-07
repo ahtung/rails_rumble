@@ -4,12 +4,12 @@
     a href='#' class='close' &times;
 .row.text-center
   - if @organization.previous
-    .small-2.columns
-      = link_to "<", @organization.previous
+    .small-2.columns.org-navigation
+      = link_to "<", @organization.previous, class: 'button tiny'
   .small-8.columns class=('small-pull-2' unless @organization.next) class=('small-push-2' unless @organization.previous)
     h1
       = "#{@organization.name} (#{@year})"
     p = link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny'
   - if @organization.next
-    .small-2.columns
-      = link_to ">", @organization.next
+    .small-2.columns.org-navigation
+      = link_to ">", @organization.next, class: 'button tiny'
