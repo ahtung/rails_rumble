@@ -2,6 +2,7 @@ class OrganizationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_year, only: [:show, :sync]
   before_action :set_organization, only: [:show, :sync]
+  after_action :verify_authorized
 
   def index
     if current_user.organizations.count > 0
@@ -12,9 +13,11 @@ class OrganizationsController < ApplicationController
   end
 
   def show
+    authorize @organization
   end
 
   def sync
+    authorize @organization
     @organization.sync!(@year, current_user)
     render layout: false
   end
