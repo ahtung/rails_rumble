@@ -7,6 +7,7 @@ class Organization < ActiveRecord::Base
   serialize :commits, Hash
 
   before_create :set_state
+  after_commit :set_commits, on: :update, if: :est_at?
 
   def previous(user)
     memberships = user.memberships.where("organization_id < ?", id)
@@ -56,5 +57,15 @@ class Organization < ActiveRecord::Base
 
   def set_state
     state = 'waiting'
+  end
+
+  def set_commits
+    year_first = est_at.strftime("%Y").to_i
+    year_now = Time.now.strftime("%Y").to_i
+    [*year_first..year_now].each do |year|
+      [*1..12].each do |month|
+        commits[year].push(month => {})
+      end
+    end
   end
 end
