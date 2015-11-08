@@ -8,12 +8,16 @@ class Organization < ActiveRecord::Base
 
   before_create :set_state
 
-  def previous
-    self.class.where(["id < ?", id]).last
+  def previous(user)
+    memberships = user.memberships.where("organization_id < ?", id)
+    previous = memberships.order(organization_id: :asc).last.organization_id if memberships.present?
+    self.class.find(previous) if previous.present?
   end
 
-  def next
-    self.class.where(["id > ?", id]).first
+  def next(user)
+    memberships = user.memberships.where("organization_id > ?", id)
+    next_organization = memberships.order(organization_id: :asc).first.organization_id if memberships.present?
+    self.class.find(next_organization) if next_organization.present?
   end
 
   def sync!(year, user)

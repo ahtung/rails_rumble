@@ -1,8 +1,8 @@
 .row.text-center
   .small-2.columns.org-navigation
     | &nbsp;
-    - if @organization.previous
-      = link_to "<", @organization.previous, class: 'button tiny'
+    - if @organization.previous(current_user)
+      = link_to "<", @organization.previous(current_user), class: 'button tiny'
   .small-8.columns
     h1.text-center
       = link_to @organization.name, "https://github.com/#{@organization.name}", target: '_blank'
@@ -16,5 +16,5 @@
     p= link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny sync-button', remote: true, disabled: sync_in_progress
   .small-2.columns.org-navigation
     | &nbsp;
-    - if @organization.next
-      = link_to ">", @organization.next, class: 'button tiny'
+    - if @organization.next(current_user)
+      = link_to ">", @organization.next(current_user), class: 'button tiny'
