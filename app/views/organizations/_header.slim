@@ -8,7 +8,8 @@
       = link_to "<", @organization.previous, class: 'button tiny'
   .small-8.columns class=('small-pull-2' unless @organization.next) class=('small-push-2' unless @organization.previous)
     h1.text-center
-      = "#{@organization.name} ("
+      = link_to @organization.name, "https://github.com/#{@organization.name}", target: '_blank'
+      | (
       a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" = @year
       | )
       ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
