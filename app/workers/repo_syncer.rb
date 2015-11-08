@@ -43,7 +43,7 @@ class RepoSyncer
 
     @organization.update_attribute(:commits, yearly)
     new_message = { pos: best_index, month: month }
-    WebsocketRails[:sync].trigger('syncer', new_message)
+    WebsocketRails[:sync].trigger('syncer.yearly', new_message)
   end
 
   def update_progress_and_notify(index)
@@ -51,6 +51,6 @@ class RepoSyncer
     total_prog = 12 * @organization.users.count * @organization.repos.count
     progress = (index.to_f / total_prog.to_f * 100.0).to_i
     message = { prog: progress, org_name: organization.name }
-    WebsocketRails[:sync].trigger('syncer', message)
+    WebsocketRails[:sync].trigger('syncer.progress', message)
   end
 end
