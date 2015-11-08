@@ -21,7 +21,7 @@ class OrganizationSyncer
         beginning_of_month = Date.new(year, month, 1).beginning_of_month
         end_of_month = Date.new(year, month, 1).end_of_month
 
-        repo.fetch_contributors_as_user!(user)  # REQ
+        repo.fetch_contributors_as_user!(user)
         new_message = { repo_count: @organization.repos.count, org_name: @organization.name }
         WebsocketRails[:sync].trigger('syncer.repos', new_message)
 
