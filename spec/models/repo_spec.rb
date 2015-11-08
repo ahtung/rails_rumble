@@ -7,5 +7,5 @@ RSpec.describe Repo, type: :model do
   it { should have_many(:users).through(:repos_users) }
 
   # ActiveRecord
-  xit { should have_db_index(:organization_id) }
+  it { should have_db_index(:organization_id) }
 end

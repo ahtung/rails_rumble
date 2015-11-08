@@ -6,6 +6,6 @@ RSpec.describe Membership, type: :model do
   it { should belong_to(:user) }
 
   # ActiveRecord
-  xit { should have_db_index(:organization_id) }
-  xit { should have_db_index(:user_id) }
+  it { should have_db_index(:organization_id) }
+  it { should have_db_index(:user_id) }
 end

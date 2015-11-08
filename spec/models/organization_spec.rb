@@ -7,30 +7,30 @@ RSpec.describe Organization, type: :model do
   it { should have_many(:users).through(:memberships) }
 
   # Instance methods
-  describe '#', skip: true do
+  describe '#' do
     let(:organization) { create(:organization) }
     let(:user) { create(:user) }
 
     describe 'next' do
-      it 'should return next org of user' do
+      xit 'should return next org of user' do
         organizations = create_list(:organization, 3)
         middle = organizations[1]
         expect(middle.next).not_to eq(nil)
       end
 
-      it 'should not return next org if none' do
+      xit 'should not return next org if none' do
         expect(organization.next).to eq(nil)
       end
     end
 
-    describe 'previous', skip: true do
-      it 'should return previous org of user' do
+    describe 'previous' do
+      xit 'should return previous org of user' do
         organizations = create_list(:organization, 3)
         middle = organizations[1]
         expect(middle.previous).not_to eq(nil)
       end
 
-      it 'should not return previous org if none' do
+      xit 'should not return previous org if none' do
         expect(organization.previous).to eq(nil)
       end
     end
