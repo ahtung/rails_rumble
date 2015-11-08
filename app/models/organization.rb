@@ -27,20 +27,14 @@ class Organization < ActiveRecord::Base
   def fetch_repos_as_user!(user)
     client = user.client
     return if client.nil?
-    reps = client.repos(name, per_page: 100)
-    while client.last_response.rels[:next]
-      reps.concat client.last_response.rels[:next].get.data
-    end
-    reps.each do |repo|
-      repos.where(name: repo.name).first_or_create
-    end
+    reps = client.repos(name)
+    reps.concat(client.last_response.rels[:next].get.data) while client.last_response.rels[:next]
+    reps.each { |repo| repos.where(name: repo.name).first_or_create }
   end
 
   def fetch_members_for!(org, client)
     members = org.rels[:members].get.data
-    while client.last_response.rels[:next]
-      members.concat client.last_response.rels[:next].get.data
-    end
+    members.concat(client.last_response.rels[:next].get.data) while client.last_response.rels[:next]
     members.each do |member|
       new_user = users.where(login: member.login).first_or_create
       new_user.update(avatar_url: member.avatar_url)
