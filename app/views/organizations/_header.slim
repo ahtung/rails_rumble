@@ -10,7 +10,7 @@
   .small-8.columns
     h1.text-center
       = link_to @organization.name, "https://github.com/#{@organization.name}", target: '_blank'
-      | (
+      |  (
       span data-tooltip="true" aria-haspopup="true" class="has-tip tip-right" data-options="show_on:medium" title="Click to see past years"
         a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" = @year
       | )

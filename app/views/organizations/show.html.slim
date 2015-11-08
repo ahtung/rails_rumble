@@ -9,7 +9,7 @@
     span.meter style="width: 0%"
 
 .row
-  ul.small-block-grid-1.medium-block-grid-4#employee-ul data-ws-url="#{ENV['WS_URL']}"
+  ul.small-block-grid-2.medium-block-grid-4#employee-ul data-ws-url="#{ENV['WS_URL']}"
     - @organization.employees_of_the_year(@year.to_i).each_with_index do |best, index|
       li
         = render 'employees', organization: @organization, best: best, index: index
