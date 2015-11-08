@@ -30,7 +30,11 @@ class Organization < ActiveRecord::Base
     return if client.nil?
     reps = client.repos(name)
     reps.concat(client.last_response.rels[:next].get.data) while client.last_response.rels[:next]
-    reps.each { |repo| repos.where(name: repo.name).first_or_create }
+    if ENV['REPO_LIMIT'] == 'false'
+      reps.each { |repo| repos.where(name: repo.name).first_or_create }
+    else
+      reps.first(20).each { |repo| repos.where(name: repo.name).first_or_create }
+    end
   end
 
   def fetch_members_for!(org, client)
