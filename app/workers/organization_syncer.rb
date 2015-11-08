@@ -26,16 +26,12 @@ class OrganizationSyncer
     total_prog = 12 * organization.users.count * organization.repos.count
     organization.update_attributes(state: 'syncing', commits: yearly)
 
-    prog = 0
     for month in 1..12 do
-      beginning_of_month = Date.new(year, month, 1).beginning_of_month
-      end_of_month = Date.new(year, month, 1).end_of_month
-
       organization.repos.each_with_index do |repo, repo_index|
-        RepoSyncer.perform_async(repo, user.id, year, month)
+        RepoSyncer.perform_async(repo.id, user.id, year, month, repo_index, total_prog)
       end
-      organization.update_attributes(commits: yearly)
     end
+    
     organization.update_attributes(state: 'completed')
   end
 end
