@@ -1,10 +1,9 @@
 = render 'header'
 = render 'repo_info'
-.row.text-center
-  p
-    = link_to 'Sign Out', destroy_user_session_path, method: :delete
 
-/ - if sync_in_progress
+.row.text-center
+  p= link_to 'Sign Out', destroy_user_session_path, method: :delete
+
 .row class="#{sync_in_progress ? 'show' : 'hide' }"
   .progress.small-12
     span.meter style="width: 0%"
