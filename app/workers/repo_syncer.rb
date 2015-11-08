@@ -5,47 +5,52 @@ class RepoSyncer
 
   def perform(repo_id, user_id, year, month, repo_index, total_prog)
     user = User.find(user_id)
-    repo = Repo.find(repo_id)
-    organization = repo.organization
+    @repo = Repo.find(repo_id)
+    @organization = @repo.organization
     beginning_of_month = Date.new(year, month, 1).beginning_of_month
     end_of_month = Date.new(year, month, 1).end_of_month
 
     if repo_index == 0
-      organization.update_attributes(state: 'syncing')
+      @organization.update_attributes(state: 'syncing')
     end
 
-    repo.fetch_contributors_as_user!(user)  # REQ
+    @repo.fetch_contributors_as_user!(user)  # REQ
 
-    contributor_names = organization.users.map(&:login)
+    commits = []
+    contributor_names = @organization.users.map(&:login)
     contributor_names.each_with_index do |contributor, index|
       begin
-        commits = user.client.commits("#{organization.name}/#{repo.name}", author: contributor, since: beginning_of_month, until: end_of_month) # REQ
+        commits = user.client.commits("#{@organization.name}/#{@repo.name}", author: contributor, since: beginning_of_month, until: end_of_month) # REQ
         commits.concat(user.client.last_response.rels[:next].get.data) while user.client.last_response.rels[:next] # REQ
       rescue
       ensure
-        update_yearly
-        update_progress
+        update_yearly_and_notify(year, month, contributor => commits.count)
+        update_progress_and_notify(repo_index)
       end
     end
 
-    if repo_index == organization.repos.count - 1
-      organization.update_attributes(state: 'completed')
+    if repo_index == @organization.repos.count - 1
+      @organization.update_attributes(state: 'completed')
     end
   end
 
-  def update_yearly
+  def update_yearly_and_notify(year, month, contributors_commits)
     puts 'update_yearly'
-    # new_message = { pos: best_index, prog: progress, month: month, member: max_member, org_name: organization.name }
-    # WebsocketRails[:sync].trigger('syncer', new_message)
+    yearly = @organization.commits
+    yearly[month][contributors_commits.key] = contributors_commits.value
+    max_member = organization.commits[year][month].max_by { |k,v| v }
+    best_index = contributor_names.index(max_member.first)
+
+    @organization.update_attribute(:commits, yearly)
+    new_message = { pos: best_index, month: month }
+    WebsocketRails[:sync].trigger('syncer', new_message)
   end
 
-  def update_progress
-    puts 'update_progress'
-    # progress = (index.to_f / total_prog.to_f * 100.0).to_i
-    # max_member = organization.commits[year][month].max_by { |k,v| v }
-    # best_index = contributor_names.index(max_member.first)
-    # puts "#{prog} - #{best_index}"
-    # new_message = { pos: best_index, prog: progress, month: month, member: max_member, org_name: organization.name }
-    # WebsocketRails[:sync].trigger('syncer', new_message)
+  def update_progress_and_notify(index)
+    puts 'update_progress_and_notify'
+    total_prog = 12 * @organization.users.count * @organization.repos.count
+    progress = (index.to_f / total_prog.to_f * 100.0).to_i
+    message = { prog: progress, org_name: organization.name }
+    WebsocketRails[:sync].trigger('syncer', message)
   end
 end
