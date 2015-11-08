@@ -1,6 +1,9 @@
-.row
-  .small-6.columns.small-centered
-    = image_tag 'http://lorempixel.com/600/400/sports/1/'
+.row.half-row
+  .small-12.column.small-centered.middle-aligned
     .text-center
-      h1= link_to '~ Eleman ~', page_path('about')
-      = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
+      h1= link_to 'Eleman', page_path('about')
+.row.half-row
+  .small-6.columns.small-centered.text-center
+    = link_to 'Sign in with Github', user_omniauth_authorize_path(:github), class: 'button'
+  .small-6.columns.small-centered.text-center
+    = link_to 'About', page_path('about')

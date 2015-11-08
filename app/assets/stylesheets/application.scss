@@ -4,10 +4,46 @@
  *= require bxslider-4
  */
 
+*{
+  outline:0;
+}
+
+html, body
+{
+  min-height: 100vh;
+}
+
+.half-row{
+  min-height: 50vh;
+  position:relative;
+}
+
+.middle-aligned{
+  position:relative;
+  top:50%;
+  transform: translateY(75%);
+  height:25vh;
+}
+
 .org-navigation{
   line-height:4.4em;
 }
 
-*{
-  outline:0;
+.bx-wrapper{
+  .bx-caption {
+    background: #bf2a1a\9;
+    background: rgba(191, 42, 26, 0.75);
+  }
+
+  .bx-caption span {
+   color: #b6cac1;
+   font-family: 'CircularStdBook';
+  }
+}
+
+#employee-ul li p {
+  padding-top:.5em;
+  span{
+    color: #bf2a1a;
+  }
 }

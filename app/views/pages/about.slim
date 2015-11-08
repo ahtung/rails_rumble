@@ -1,10 +1,14 @@
 .row
-  .small-8.columns.small-centered
-    .text-center
-      h1= link_to '~ Eleman ~', root_path
-      h3 Have you ever seen one of these?
-      p = image_tag 'board.jpg'
-      h3 ... in one of these places, maybe?
+  .small-8.columns.small-centered.text-center
+    .row
+      h1= link_to 'Eleman', root_path
+    .row
+      h4 Have you ever seen one of these?
+    .row
+      p= image_tag 'board.jpg', class: 'th'
+    .row
+      h4 ... in one of these places, maybe?
+    .row
       .row
         .small-4.column
           a.th href="//www.mcdonalds.com" target='_blank'
@@ -15,7 +19,8 @@
         .small-4.column
           a.th href="//www.pizzahut.com" target='_blank'
             = image_tag 'pizza_hut_logo.jpg'
-      h4 We were curious to see what a similar thing would like like for our businesses.
+      .row
+        h4 We were curious to see what a similar thing would like like for our businesses.
       .row
         .small-2.column
           = link_to 'https://github.com/ahtung', target: '_blank', class: 'th' do
@@ -36,15 +41,17 @@
           = link_to 'https://github.com/ruby', target: '_blank', class: 'th' do
             = image_tag 'ruby_logo.png'
 
-      h4 ... and this is what we got, give it a try
       .row
-        p = link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button tiny'
-
-      h5 if you liked our eleman boards, please leave a star on github.
-      p.text-center
-        iframe frameborder="0" height="30px" scrolling="0" src="https://ghbtns.com/github-btn.html?user=railsrumble&repo=eleman&type=star&count=true&size=large" width="160px"
-
-      h4 made by
+        h4 ... and this is what we got, give it a try
       .row
-        = link_to "//www.ahtung.co", class: 'th', target: '_blank' do
-          = image_tag 'ah.png'
+        p= link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button'
+      .row
+        h4 if you liked our eleman boards, please leave a star on github.
+      .row
+        p.text-center
+          iframe frameborder="0" height="30px" scrolling="0" src="https://ghbtns.com/github-btn.html?user=railsrumble&repo=eleman&type=star&count=true&size=large" width="160px"
+      .row
+        h4 made by
+        .row
+          = link_to "//www.ahtung.co", class: 'th', target: '_blank' do
+            = image_tag 'ah.png'
