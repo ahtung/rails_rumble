@@ -160,6 +160,8 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    pundit (1.0.1)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-google-analytics (1.2.0)
       actionpack
@@ -326,6 +328,7 @@ DEPENDENCIES
   omniauth-github
   pg
   pry-rails
+  pundit
   rack-google-analytics
   rails (= 4.2.4)
   rails-assets-bxslider-4!
