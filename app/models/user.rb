@@ -5,8 +5,7 @@ class User < ActiveRecord::Base
   has_many :repos_users, dependent: :destroy
   has_many :repos, through: :repos_users
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :omniauthable
+  devise :omniauthable
 
   validates :email, presence: false, email: false
 
