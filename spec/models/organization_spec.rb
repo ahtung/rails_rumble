@@ -47,7 +47,7 @@ RSpec.describe Organization, type: :model do
     end
 
     describe 'employees_of_the_month(year)' do
-      xit 'should return an array of length 12' do
+      it 'should return an array of length 12' do
         expect(organization.employees_of_the_year(2015).length).to eq(12)
       end
     end
