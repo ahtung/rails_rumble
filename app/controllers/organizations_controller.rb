@@ -3,6 +3,14 @@ class OrganizationsController < ApplicationController
   before_action :set_year, only: [:show, :sync]
   before_action :set_organization, only: [:show, :sync]
 
+  def index
+    if current_user.organizations.count > 0
+      redirect_to organization_path(current_user.organizations.first)
+    else
+      redirect_to pages_path('no_org')
+    end
+  end
+
   def show
   end
 
@@ -14,7 +22,7 @@ class OrganizationsController < ApplicationController
   private
 
   def set_organization
-    @organization = Organization.find(params[:id])
+    @organization = current_user.organizations.find(params[:id])
   end
 
   def set_year

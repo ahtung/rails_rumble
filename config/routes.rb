@@ -3,7 +3,12 @@ Rails.application.routes.draw do
   devise_scope :user do
     delete '/users/sign_out' => 'devise/sessions#destroy', as: 'destroy_user_session'
   end
-  resources :organizations, only: :show do
+
+  authenticated :user do
+    root to: "organizations#index", as: 'authenticated_root'
+  end
+
+  resources :organizations, only: [:show, :index] do
     member do
       get 'sync'
     end
