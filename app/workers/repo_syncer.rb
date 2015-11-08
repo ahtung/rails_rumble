@@ -42,7 +42,7 @@ class RepoSyncer
     best_index = contributor_names.index(max_member.first)
 
     @organization.update_attribute(:commits, yearly)
-    new_message = { pos: best_index, month: month }
+    new_message = { pos: best_index, month: month, org_name: organization.name }
     WebsocketRails[:sync].trigger('syncer.yearly', new_message)
   end
 
