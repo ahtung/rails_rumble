@@ -60,16 +60,16 @@ class Organization < ActiveRecord::Base
   end
 
   def set_commits
-    return unless commits.nil?
-    commits = {}
+    return unless commits.blank?
+    yearly = {}
     year_first = est_at.strftime("%Y").to_i
     year_now = Time.now.strftime("%Y").to_i
     [*year_first..year_now].each do |year|
-      commits.merge!(year => {})
+      yearly.merge!(year => {})
       [*1..12].each do |month|
-        commits[year].merge!(month => {})
+        yearly[year].merge!(month => {})
       end
     end
-    update_attribute(:commits, commits)
+    update_attribute(:commits, yearly)
   end
 end
