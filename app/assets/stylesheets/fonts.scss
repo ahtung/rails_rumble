@@ -1,0 +1,19 @@
+@font-face {
+    font-family: 'CircularStdBook';
+    src: font-url('CircularStdBook.eot');
+    src: font-url('CircularStdBook.eot?iefix') format('eot'),
+        font-url('CircularStdBook.woff') format('woff'),
+        font-url('CircularStdBook.ttf') format('truetype'),
+        font-url('CircularStdBook.svg#webfont') format('svg');
+}
+
+@font-face {
+  font-family: 'circello';
+  src: font-url('fontello.eot');
+  src: font-url('fontello.eot?iefix') format('embedded-opentype'),
+       font-url('fontello.woff') format('woff'),
+       font-url('fontello.ttf') format('truetype'),
+       font-url('fontello.svg#webfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
