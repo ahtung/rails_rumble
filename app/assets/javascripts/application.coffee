@@ -30,24 +30,24 @@ $ ->
   dispatcher = new WebSocketRails(ws_url)
   channel = dispatcher.subscribe('sync')
 
-  channel.bind('syncer.progress', (task) ->
+  channel.bind('syncer.progress', (progress) ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
-    return if org_name != task.org_name
+    return if org_name != progress.org_name
     $("span.meter").css('width', "#{prog}%")
-    if task.prog == 100
+    if progress.prog == 100
       setTimeout(() ->
         $("span.meter").parent().parent().addClass('hide')
         $('.sync-button').removeAttr("disabled")
       , 250)
   )
 
-  channel.bind('syncer.yearly', (task) ->
+  channel.bind('syncer.yearly', (yearly) ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
-    return if org_name != task.org_name
-    sliders[parseInt(task.month) - 1].stopAuto()
-    sliders[parseInt(task.month) - 1].goToSlide(parseInt(task.pos))
+    return if org_name != yearly.org_name
+    sliders[parseInt(yearly.month) - 1].stopAuto()
+    sliders[parseInt(yearly.month) - 1].goToSlide(parseInt(yearly.pos))
   )
 
   $(".alert-box").delay(1500).fadeOut "slow"
