@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def self.from_login(contributor)
-    User.where(login: contributor.login).first_or_create do |user|
+    where(login: contributor.login).first_or_create do |user|
       user.provider = 'github'
       user.uid = contributor.id
       user.login = contributor.login
