@@ -10,4 +10,6 @@
     - organization.users.each do |user|
       li
         = image_tag user.avatar_url, title: user.login
-  p = "#{sprintf '%02d', (index+1)} #{Date::MONTHNAMES[index+1]}"
+  p
+    span = "#{sprintf '%02d', (index+1)} "
+    = "#{Date::MONTHNAMES[index+1]}"
