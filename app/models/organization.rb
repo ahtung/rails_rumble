@@ -30,24 +30,13 @@ class Organization < ActiveRecord::Base
     return if client.nil?
     reps = client.repos(name)
     reps.concat(client.last_response.rels[:next].get.data) while client.last_response.rels[:next]
-    if ENV['REPO_LIMIT'] == 'false'
-      reps.each { |repo| repos.where(name: repo.name).first_or_create }
-    else
-      limit = ENV['REPO_LIMIT'].to_i
-      reps.first(limit).each { |repo| repos.where(name: repo.name).first_or_create }
-    end
+    reps.each { |repo| repos.where(name: repo.name).first_or_create }
   end
 
   def fetch_members_for!(org, client)
     members = org.rels[:members].get.data
     members.concat(client.last_response.rels[:next].get.data) while client.last_response.rels[:next]
-    if ENV['MEMBER_LIMIT'] == 'false'
-      members.each { |member| new_user = users.where(login: member.login).first_or_create; new_user.update(avatar_url: member.avatar_url) }
-    else
-      limit = ENV['MEMBER_LIMIT'].to_i
-      members.first(limit).each { |member| new_user = users.where(login: member.login).first_or_create; new_user.update(avatar_url: member.avatar_url) }
-    end
-
+    members.each { |member| new_user = users.where(login: member.login).first_or_create; new_user.update(avatar_url: member.avatar_url) }
   end
 
   def employees_of_the_year(year)
