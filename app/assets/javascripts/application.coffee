@@ -46,8 +46,9 @@ $ ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
     return if org_name != yearly.org_name
-    sliders[parseInt(yearly.month) - 1].stopAuto()
-    sliders[parseInt(yearly.month) - 1].goToSlide(parseInt(yearly.pos))
+    if yearly.pos != -1
+      sliders[parseInt(yearly.month) - 1].stopAuto()
+      sliders[parseInt(yearly.month) - 1].goToSlide(parseInt(yearly.pos))
   )
 
   channel.bind('syncer.repos', (repos) ->

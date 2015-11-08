@@ -40,16 +40,14 @@ class OrganizationSyncer
   end
 
   def update_yearly_and_notify(year, month, contributors_commits)
-    puts 'update_yearly_and_notify'
     if @organization.commits[year][month][contributors_commits.keys.first]
       @organization.commits[year][month][contributors_commits.keys.first] += contributors_commits.values.first
     else
       @organization.commits[year][month][contributors_commits.keys.first] = contributors_commits.values.first
     end
-    puts @organization.commits
     @organization.save
     max_member = @organization.commits[year][month].max_by { |k,v| v }
-    best_index = @organization.users.map(&:login).index(max_member.first)
+    best_index = (max_member.last == 0 ? -1 : @organization.users.map(&:login).index(max_member.first))
     new_message = { pos: best_index, month: month, org_name: @organization.name }
     WebsocketRails[:sync].trigger('syncer.yearly', new_message)
   end
