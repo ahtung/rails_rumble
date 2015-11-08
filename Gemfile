@@ -43,6 +43,7 @@ group :test do
 end
 
 group :development do
+  gem 'rubocop', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
 end
