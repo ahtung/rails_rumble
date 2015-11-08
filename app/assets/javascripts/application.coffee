@@ -50,4 +50,11 @@ $ ->
     sliders[parseInt(yearly.month) - 1].goToSlide(parseInt(yearly.pos))
   )
 
+  channel.bind('syncer.repos', (repos) ->
+    org_name = $('#organization-row').data('organization-name')
+    return if org_name == '' || org_name == null
+    return if org_name != repos.org_name
+    $('.repo-count').html(repos.repo_count)
+  )
+
   $(".alert-box").delay(1500).fadeOut "slow"

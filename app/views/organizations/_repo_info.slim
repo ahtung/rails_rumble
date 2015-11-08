@@ -1,2 +1,6 @@
 .row.text-center
-  h4= "#{@organization.users.count} Members & #{@organization.repos.count} Repos"
+  h4
+    span.primary= @organization.users.count
+    = " Members & "
+    span.primary.repo-count= @organization.repos.count
+    = " Repos"

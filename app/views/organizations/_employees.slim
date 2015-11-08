@@ -1,16 +1,8 @@
-- na = false
-- if na
-  ul.bxslider
+- complete = !best.nil? && best.last > -1
+ul.bxslider id="slider-#{index}" data-complete="#{complete}" data-best="#{(best ? best.first.first : '')}"
+  - organization.users.each do |user|
     li
-      = image_tag 'http://placehold.it/460x460', class: 'th'
-      .orbit-caption
-        = 'N/A'
-- else
-  - complete = (organization.state == 'completed' || !best.nil?) ? 'true' : ''
-  ul.bxslider id="slider-#{index}" data-complete="#{complete}" data-best="#{(best ? best.first : '')}"
-    - organization.users.each do |user|
-      li
-        = image_tag user.avatar_url, title: user.login
-  p.text-center
-    span = "#{sprintf '%02d', (index+1)} "
-    = "| #{Date::MONTHNAMES[index+1]}"
+      = image_tag user.avatar_url, title: user.login
+p.text-center
+  span = "#{sprintf '%02d', (index+1)} "
+  = "| #{Date::MONTHNAMES[index+1]}"
