@@ -9,10 +9,13 @@ class User < ActiveRecord::Base
 
   validates :email, presence: false, email: false
 
+  after_commit :fetch_organizations!, on: :create
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
+      user.oauth_token = auth['credentials']['token']
       user.login = auth.info.nickname
       user.avatar_url = auth.info.image
     end
@@ -28,14 +31,13 @@ class User < ActiveRecord::Base
   end
 
   def fetch_organizations!
-    user = client.user
-    orgs = user.rels[:organizations].get.data
-    while client.last_response.rels[:next]
-      orgs.concat client.last_response.rels[:next].get.data
-    end
+    return if client.nil?
+    orgs = client.organizations(client.user.login)
+    orgs.concat(client.last_response.rels[:next].get.data) while client.last_response.rels[:next]
     orgs.each do |org|
       org_data = client.organization(org.login)
       new_org = organizations.where(name: org.login).first_or_create
+      # TODO: (dunyakirkali) move to model
       new_org.update(est_at: org_data.created_at)
       new_org.fetch_members_for!(org, client)
     end

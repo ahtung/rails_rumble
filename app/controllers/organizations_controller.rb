@@ -9,7 +9,7 @@ class OrganizationsController < ApplicationController
     if current_user.organizations.count > 0
       redirect_to organization_path(current_user.organizations.first)
     else
-      redirect_to pages_path('no_org')
+      redirect_to page_path('no_org')
     end
   end
 
