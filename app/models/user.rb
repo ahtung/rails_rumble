@@ -20,6 +20,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.from_contributor(contributor)
+    User.where(login: contributor.login).first_or_create do |user|
+      user.provider = 'github'
+      user.uid = contributor.id
+      user.password = Devise.friendly_token[0,20]
+      user.avatar_url = contributor.avatar_url
+    end
+  end
+
   def fetch_organizations!
     user = client.user
     orgs = user.rels[:organizations].get.data

@@ -12,9 +12,27 @@ RSpec.describe Organization, type: :model do
     let(:user) { create(:user) }
 
     describe 'next' do
+      it 'should return next org' do
+        organizations = create_list(:organization, 3)
+        middle = organizations[1]
+        expect(middle.next).not_to eq(nil)
+      end
+
+      it 'should not return next org if none' do
+        expect(organization.next).to eq(nil)
+      end
     end
 
     describe 'previous' do
+      it 'should return previous org' do
+        organizations = create_list(:organization, 3)
+        middle = organizations[1]
+        expect(middle.previous).not_to eq(nil)
+      end
+
+      it 'should not return previous org if none' do
+        expect(organization.previous).to eq(nil)
+      end
     end
 
     describe 'sync!' do
