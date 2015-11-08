@@ -12,6 +12,9 @@ class OrganizationSyncer
     @organization.set_commits
 
     @prog = 0
+    new_message = { org_name: @organization.name }
+    WebsocketRails[:sync].trigger('syncer.started', new_message)
+
     for month in 1..12 do
       @organization.repos.each_with_index do |repo, repo_index|
         beginning_of_month = Date.new(year, month, 1).beginning_of_month
