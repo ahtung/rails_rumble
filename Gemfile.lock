@@ -108,6 +108,7 @@ GEM
       sass (>= 3.3.0, < 3.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    google-analytics-rails (0.0.6)
     hashie (3.4.3)
     high_voltage (2.4.0)
     hiredis (0.6.0)
@@ -316,6 +317,7 @@ DEPENDENCIES
   faye-websocket (= 0.10.0)
   foreman
   foundation-rails
+  google-analytics-rails
   high_voltage (~> 2.4.0)
   jbuilder (~> 2.0)
   jquery-rails
