@@ -14,7 +14,7 @@
       ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
         - get_years(@organization.est_at).each do |year|
           li= link_to year, organization_path(@organization, year: year)
-    p = link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny'
+    p= link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny', remote: true
   - if @organization.next
     .small-2.columns.org-navigation
       = link_to ">", @organization.next, class: 'button tiny'

@@ -4,10 +4,10 @@
   p
     = link_to 'Sign Out', destroy_user_session_path, method: :delete
 
-- if sync_in_progress
-  .row
-    .progress.small-12
-      span.meter style="width: 0%"
+/ - if sync_in_progress
+.row class="#{sync_in_progress ? 'show' : 'hide' }"
+  .progress.small-12
+    span.meter style="width: 0%"
 
 .row
   ul.small-block-grid-1.medium-block-grid-4#employee-ul data-ws-url="#{ENV['WS_URL']}"
