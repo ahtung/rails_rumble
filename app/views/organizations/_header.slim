@@ -11,7 +11,8 @@
     h1.text-center
       = link_to @organization.name, "https://github.com/#{@organization.name}", target: '_blank'
       | (
-      a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" = @year
+      span data-tooltip="true" aria-haspopup="true" class="has-tip tip-right" data-options="show_on:medium" title="Click to see your organization history"
+        a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" = @year
       | )
       ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
         - get_years(@organization.est_at).each do |year|
