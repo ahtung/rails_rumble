@@ -10,18 +10,26 @@ class RepoSyncer
     beginning_of_month = Date.new(year, month, 1).beginning_of_month
     end_of_month = Date.new(year, month, 1).end_of_month
 
-    repo.fetch_contributors_as_user!(user)
-    
+    if repo_index == 0
+      organization.update_attributes(state: 'syncing')
+    end
+
+    repo.fetch_contributors_as_user!(user)  # REQ
+
     contributor_names = organization.users.map(&:login)
     contributor_names.each_with_index do |contributor, index|
       begin
-        commits = user.client.commits("#{organization.name}/#{repo.name}", author: contributor, since: beginning_of_month, until: end_of_month)
-        commits.concat(user.client.last_response.rels[:next].get.data) while user.client.last_response.rels[:next]
+        commits = user.client.commits("#{organization.name}/#{repo.name}", author: contributor, since: beginning_of_month, until: end_of_month) # REQ
+        commits.concat(user.client.last_response.rels[:next].get.data) while user.client.last_response.rels[:next] # REQ
       rescue
       ensure
         update_yearly
         update_progress
       end
+    end
+
+    if repo_index == organization.repos.count - 1
+      organization.update_attributes(state: 'completed')
     end
   end
 

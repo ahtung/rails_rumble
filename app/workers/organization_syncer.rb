@@ -4,34 +4,15 @@ class OrganizationSyncer
   sidekiq_options retry: false, unique: :until_and_while_executing, expires_in: 1.hour
 
   def perform(id, year, user_id)
-    yearly = {
-      year => {
-        1  => {},
-        2  => {},
-        3  => {},
-        4  => {},
-        5  => {},
-        6  => {},
-        7  => {},
-        8  => {},
-        9  => {},
-        10 => {},
-        11 => {},
-        12 => {}
-      }
-    }
     user = User.find(user_id)
     organization = Organization.find(id)
-    organization.fetch_repos_as_user!(user)
+    organization.fetch_repos_as_user!(user) # REQ
     total_prog = 12 * organization.users.count * organization.repos.count
-    organization.update_attributes(state: 'syncing', commits: yearly)
 
     for month in 1..12 do
       organization.repos.each_with_index do |repo, repo_index|
         RepoSyncer.perform_async(repo.id, user.id, year, month, repo_index, total_prog)
       end
     end
-    
-    organization.update_attributes(state: 'completed')
   end
 end
