@@ -42,7 +42,8 @@ $ ->
     $("span.meter").css('width', "#{perc}%")
     if parseInt(task.month) == 12
       setTimeout(() ->
-        $("span.meter").parent().fadeOut()
+        $("span.meter").parent().parent().addClass('hide')
+        $('.sync-button').removeAttr("disabled")
       , 250)
 
     member_pos = find_member_pos(task)
