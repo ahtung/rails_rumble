@@ -7,18 +7,6 @@
 $ ->
   $(document).foundation()
 
-  update_slider = (org) ->
-    sliders[parseInt(org.month) - 1].stopAuto()
-    sliders[parseInt(org.month) - 1].goToSlide(parseInt(org.pos))
-
-  update_progress = (prog) ->
-    $("span.meter").css('width', "#{prog}%")
-    if prog == 100
-      setTimeout(() ->
-        $("span.meter").parent().parent().addClass('hide')
-        $('.sync-button').removeAttr("disabled")
-      , 250)
-
   sliders = []
   $('.bxslider').each (i, obj) ->
     sliders[i] = $(this).bxSlider(
@@ -46,14 +34,20 @@ $ ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
     return if org_name != task.org_name
-    update_progress(task.prog)
+    $("span.meter").css('width', "#{prog}%")
+    if task.prog == 100
+      setTimeout(() ->
+        $("span.meter").parent().parent().addClass('hide')
+        $('.sync-button').removeAttr("disabled")
+      , 250)
   )
 
   channel.bind('syncer.yearly', (task) ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
     return if org_name != task.org_name
-    update_slider(task)
+    sliders[parseInt(task.month) - 1].stopAuto()
+    sliders[parseInt(task.month) - 1].goToSlide(parseInt(task.pos))
   )
 
   $(".alert-box").delay(1500).fadeOut "slow"
