@@ -3,9 +3,9 @@ class RepoSyncer
 
   sidekiq_options retry: false, unique: :until_and_while_executing
 
-  def perform(repo_id, user_id, year, month, repo_index, total_prog)
+  def perform(id, user_id, year, month, repo_index, total_prog)
     user = User.find(user_id)
-    @repo = Repo.find(repo_id)
+    @repo = Repo.find(id)
     @organization = @repo.organization
     beginning_of_month = Date.new(year, month, 1).beginning_of_month
     end_of_month = Date.new(year, month, 1).end_of_month
@@ -47,7 +47,6 @@ class RepoSyncer
   end
 
   def update_progress_and_notify(index)
-    puts 'update_progress_and_notify'
     total_prog = 12 * @organization.users.count * @organization.repos.count
     progress = (index.to_f / total_prog.to_f * 100.0).to_i
     message = { prog: progress, org_name: organization.name }
