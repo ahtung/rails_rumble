@@ -24,7 +24,7 @@ class OrganizationSyncer
     organization = Organization.find(id)
     organization.fetch_repos_as_user!(user)
     total_prog = 12 * organization.users.count * organization.repos.count
-    organization.update_attribute(:state, 'syncing')
+    organization.update_attributes(state: 'syncing', commits: yearly)
 
     prog = 0
     for month in 1..12 do

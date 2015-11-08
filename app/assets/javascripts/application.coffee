@@ -33,9 +33,7 @@ $ ->
 
     if sliders[i].data('complete')
       sliders[i].stopAuto()
-      member_pos = find_member_pos(
-        member: [sliders[i].data('best'), -1]
-      )
+      member_pos = find_member_pos(member: [sliders[i].data('best'), -1])
       if member_pos != -1
         sliders[i].goToSlide(member_pos + 1)
     else
