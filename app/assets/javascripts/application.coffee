@@ -42,11 +42,17 @@ $ ->
   dispatcher = new WebSocketRails(ws_url)
   channel = dispatcher.subscribe('sync')
 
-  channel.bind('syncer', (task) ->
+  channel.bind('syncer.progress', (task) ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
     return if org_name != task.org_name
     update_progress(task.prog)
+  )
+
+  channel.bind('syncer.yearly', (task) ->
+    org_name = $('#organization-row').data('organization-name')
+    return if org_name == '' || org_name == null
+    return if org_name != task.org_name
     update_slider(task)
   )
 
