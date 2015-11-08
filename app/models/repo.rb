@@ -5,8 +5,8 @@ class Repo < ActiveRecord::Base
   has_many :users, through: :repos_users
 
   def fetch_contributors_as_user!(user)
-    contributors = client.contributors("#{organization.name}/#{name}")
-    contributors.concat client.last_response.rels[:next].get.data while client.last_response.rels[:next]
+    contributors = client(user).contributors("#{organization.name}/#{name}")
+    contributors.concat client(user).last_response.rels[:next].get.data while client(user).last_response.rels[:next]
     return if contributors == ''
     users.delete_all
     contributors.each do |contributor|
@@ -17,7 +17,7 @@ class Repo < ActiveRecord::Base
 
   private
 
-  def client
+  def client(user)
     @client ||= user.client
   end
 end
