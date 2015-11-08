@@ -34,8 +34,8 @@ $ ->
       sliders[i].startAuto()
 
 
-
-  dispatcher = new WebSocketRails('localhost:3000/websocket')
+  ws_url = $('#employee-ul').data('ws-url')
+  dispatcher = new WebSocketRails(ws_url)
   channel = dispatcher.subscribe('sync')
   channel.bind('syncer', (task) ->
     perc = parseInt(task.month) * 100 / 12
