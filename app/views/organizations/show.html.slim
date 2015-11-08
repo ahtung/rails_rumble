@@ -8,7 +8,7 @@
   .progress.small-12
     span.meter style="width: 0%"
 
-.row
+.row#organization-row data-organization-name="#{@organization.name}"
   ul.small-block-grid-1.medium-block-grid-4#employee-ul data-ws-url="#{ENV['WS_URL']}"
     - @organization.employees_of_the_year(@year.to_i).each_with_index do |best, index|
       li

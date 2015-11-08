@@ -15,7 +15,6 @@ class User < ActiveRecord::Base
       user.uid = auth.uid
       user.login = auth.info.nickname
       user.avatar_url = auth.info.image
-      user.password = Devise.friendly_token[0,20]
     end
   end
 
@@ -23,7 +22,7 @@ class User < ActiveRecord::Base
     User.where(login: contributor.login).first_or_create do |user|
       user.provider = 'github'
       user.uid = contributor.id
-      user.password = Devise.friendly_token[0,20]
+      user.login = contributor.login
       user.avatar_url = contributor.avatar_url
     end
   end

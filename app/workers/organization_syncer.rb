@@ -23,18 +23,18 @@ class OrganizationSyncer
     user = User.find(user_id)
     organization = Organization.find(id)
     organization.fetch_repos_as_user!(user)
-
+    total_prog = 12 * organization.users.count * organization.repos.count
     organization.update_attribute(:state, 'syncing')
 
     for month in 1..12 do
       beginning_of_month = Date.new(year, month, 1).beginning_of_month
       end_of_month = Date.new(year, month, 1).end_of_month
 
-      organization.repos.each do |repo|
+      organization.repos.each_with_index do |repo, repo_index|
         repo.fetch_contributors_as_user!(user)
         next if repo.users.blank?
         contributor_names = repo.users.map(&:login)
-        contributor_names.each do |contributor|
+        contributor_names.each_with_index do |contributor, index|
           begin
             commits = user.client.commits(
               "#{organization.name}/#{repo.name}",
@@ -55,11 +55,14 @@ class OrganizationSyncer
             puts yearly.inspect
           rescue
           end
+
+          puts "#{month} #{index} #{repo_index}"
+          prog = ((month * (index + 1) * (repo_index + 1)) / total_prog * 100).to_i
+          puts "#{prog}"
+          new_message = { prog: prog, month: month, member: yearly[year][month].max_by{|k,v| v}, org_name: organization.name }
+          WebsocketRails[:sync].trigger('syncer', new_message)
         end
       end
-
-      new_message = { month: month, member: yearly[year][month].max_by{|k,v| v} }
-      WebsocketRails[:sync].trigger('syncer', new_message)
       organization.update_attributes(commits: yearly)
     end
     organization.update_attributes(state: 'completed')
