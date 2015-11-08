@@ -29,7 +29,8 @@ class OrganizationSyncer
         @organization.users.map(&:login).each_with_index do |contributor, index|
           begin
             commits = user.client.commits("#{@organization.name}/#{repo.name}", author: contributor, since: beginning_of_month, until: end_of_month) # REQ
-            commits.concat(user.client.last_response.rels[:next].get.data) while user.client.last_response.rels[:next] # REQ
+            if ENV['PERFORMANT'] == 'false'
+              commits.concat(user.client.last_response.rels[:next].get.data) while user.client.last_response.rels[:next] # REQ
           rescue
           ensure
             @prog += 1
