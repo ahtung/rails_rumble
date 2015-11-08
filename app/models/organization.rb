@@ -43,6 +43,7 @@ class Organization < ActiveRecord::Base
 
   def employees_of_the_year(year)
     return Array.new(12) if commits.blank?
+    return Array.new(12) if commits[year].nil?
     commits[year].map do |month, monthly_scores|
       best = monthly_scores.max_by { |k,v| v }
       return Array.new(12) if best.nil?
