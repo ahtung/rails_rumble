@@ -47,7 +47,6 @@ class RepoSyncer
   end
 
   def update_progress_and_notify(index)
-    puts 'update_progress_and_notify'
     total_prog = 12 * @organization.users.count * @organization.repos.count
     progress = (index.to_f / total_prog.to_f * 100.0).to_i
     message = { prog: progress, org_name: organization.name }
