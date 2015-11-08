@@ -40,6 +40,10 @@ $ ->
   channel.bind('syncer', (task) ->
     perc = parseInt(task.month) * 100 / 12
     $("span.meter").css('width', "#{perc}%")
+    if parseInt(task.month) == 12
+      setTimeout(() ->
+        $("span.meter").parent().fadeOut()
+      , 250)
 
     member_pos = find_member_pos(task)
     if member_pos != -1

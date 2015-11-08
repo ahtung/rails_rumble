@@ -1,6 +1,7 @@
 class OrganizationSyncer
   include Sidekiq::Worker
-  sidekiq_options retry: false, unique: true, expires_in: 1.hour
+
+  sidekiq_options retry: false, unique: :until_and_while_executing, expires_in: 1.hour
 
   def perform(id, year, user_id)
     yearly = {
@@ -22,6 +23,8 @@ class OrganizationSyncer
     user = User.find(user_id)
     organization = Organization.find(id)
     organization.fetch_repos_as_user!(user)
+
+    organization.update_attribute(:state, 'syncing')
 
     for month in 1..12 do
       beginning_of_month = Date.new(year, month, 1).beginning_of_month
@@ -57,7 +60,8 @@ class OrganizationSyncer
 
       new_message = { month: month, member: yearly[year][month].max_by{|k,v| v} }
       WebsocketRails[:sync].trigger('syncer', new_message)
-      organization.update_attribute(:commits, yearly)
+      organization.update_attributes(commits: yearly)
     end
+    organization.update_attributes(state: 'completed')
   end
 end
