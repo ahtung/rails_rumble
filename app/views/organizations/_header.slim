@@ -1,20 +1,22 @@
 .row.text-center
   .small-2.columns.org-navigation
     | &nbsp;
-    - if @organization.previous(current_user)
+    - if current_user && @organization.previous(current_user)
       = link_to "<", @organization.previous(current_user), class: 'button tiny'
   .small-8.columns
     h1.text-center
       = link_to @organization.name, "https://github.com/#{@organization.name}", target: '_blank'
-      |  (
-      span data-tooltip="true" aria-haspopup="true" class="has-tip tip-right" data-options="show_on:medium" title="Click to see past years"
-        a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" = @year
-      | )
-      ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
-        - get_years(@organization.est_at).each do |year|
-          li= link_to year, organization_path(@organization, year: year)
-    p= link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny sync-button', remote: true, disabled: sync_in_progress
+      - if current_user
+        |  (
+        span data-tooltip="true" aria-haspopup="true" class="has-tip tip-right" data-options="show_on:medium" title="Click to see past years"
+          a data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" = @year
+        | )
+        ul id="drop1" class="f-dropdown" data-dropdown-content=true aria-hidden="true" tabindex="-1"
+          - get_years(@organization.est_at).each do |year|
+            li= link_to year, organization_path(@organization, year: year)
+    - if current_user
+      p= link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny sync-button', remote: true, disabled: sync_in_progress
   .small-2.columns.org-navigation
     | &nbsp;
-    - if @organization.next(current_user)
+    - if current_user && @organization.next(current_user)
       = link_to ">", @organization.next(current_user), class: 'button tiny'

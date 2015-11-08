@@ -12,5 +12,8 @@ Rails.application.routes.draw do
     member do
       get 'sync'
     end
+    collection do
+      get 'sample'
+    end
   end
 end
