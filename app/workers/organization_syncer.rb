@@ -33,20 +33,17 @@ class OrganizationSyncer
 
       organization.repos.each_with_index do |repo, repo_index|
         repo.fetch_contributors_as_user!(user)
-        next if repo.users.blank?
-        contributor_names = repo.users.map(&:login)
+        next if repo.organization.users.map(&:login).blank?
+        contributor_names = repo.organization.users.map(&:login)
         contributor_names.each_with_index do |contributor, index|
           begin
             commits = user.client.commits(
               "#{organization.name}/#{repo.name}",
               author: contributor,
               since: beginning_of_month,
-              until: end_of_month,
-              per_page: 100
+              until: end_of_month
             )
-            while user.client.last_response.rels[:next]
-              commits.concat user.client.last_response.rels[:next].get.data
-            end
+            commits.concat(user.client.last_response.rels[:next].get.data) while user.client.last_response.rels[:next]
 
             if yearly[year][month][contributor]
               yearly[year][month][contributor] += commits.count
