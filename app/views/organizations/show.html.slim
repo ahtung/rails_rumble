@@ -12,4 +12,4 @@
   ul.small-block-grid-2.medium-block-grid-4#employee-ul data-ws-url="#{ENV['WS_URL']}"
     - @organization.employees_of_the_year(@year.to_i).each_with_index do |best, index|
       li data-best-pos="#{(best ? best.last : '')}"
-        = render 'employees', organization: @organization, best: (best ? best.first : nil), index: index
+        = render 'employees', organization: @organization, best: best, index: index

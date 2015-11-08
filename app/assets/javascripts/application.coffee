@@ -7,18 +7,6 @@
 $ ->
   $(document).foundation()
 
-  update_slider = (org) ->
-    sliders[parseInt(org.month) - 1].stopAuto()
-    sliders[parseInt(org.month) - 1].goToSlide(parseInt(org.pos))
-
-  update_progress = (prog) ->
-    $("span.meter").css('width', "#{prog}%")
-    if prog == 100
-      setTimeout(() ->
-        $("span.meter").parent().parent().addClass('hide')
-        $('.sync-button').removeAttr("disabled")
-      , 250)
-
   sliders = []
   $('.bxslider').each (i, obj) ->
     sliders[i] = $(this).bxSlider(
@@ -42,12 +30,32 @@ $ ->
   dispatcher = new WebSocketRails(ws_url)
   channel = dispatcher.subscribe('sync')
 
-  channel.bind('syncer', (task) ->
+  channel.bind('syncer.progress', (progress) ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
-    return if org_name != task.org_name
-    update_progress(task.prog)
-    update_slider(task)
+    return if org_name != progress.org_name
+    $("span.meter").css('width', "#{progress.prog}%")
+    if progress.prog == 100
+      setTimeout(() ->
+        $("span.meter").parent().parent().addClass('hide')
+        $('.sync-button').removeAttr("disabled")
+      , 250)
+  )
+
+  channel.bind('syncer.yearly', (yearly) ->
+    org_name = $('#organization-row').data('organization-name')
+    return if org_name == '' || org_name == null
+    return if org_name != yearly.org_name
+    if yearly.pos != -1
+      sliders[parseInt(yearly.month) - 1].stopAuto()
+      sliders[parseInt(yearly.month) - 1].goToSlide(parseInt(yearly.pos))
+  )
+
+  channel.bind('syncer.repos', (repos) ->
+    org_name = $('#organization-row').data('organization-name')
+    return if org_name == '' || org_name == null
+    return if org_name != repos.org_name
+    $('.repo-count').html(repos.repo_count)
   )
 
   $(".alert-box").delay(1500).fadeOut "slow"
