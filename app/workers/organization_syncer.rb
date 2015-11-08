@@ -41,6 +41,9 @@ class OrganizationSyncer
         end
       end
     end
+
+    new_message = { org_name: @organization.name }
+    WebsocketRails[:sync].trigger('syncer.ended', new_message)
     @organization.update_attributes(state: 'completed')
   end
 

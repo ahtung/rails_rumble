@@ -40,16 +40,19 @@ $ ->
       slider.startAuto()
   )
 
+  channel.bind('syncer.ended', (message) ->
+    org_name = $('#organization-row').data('organization-name')
+    return if org_name == '' || org_name == null
+    return if org_name != message.org_name
+    $("span.meter").parent().parent().addClass('hide')
+    $('.sync-button').show()
+  )
+
   channel.bind('syncer.progress', (progress) ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
     return if org_name != progress.org_name
     $("span.meter").css('width', "#{progress.prog}%")
-    if progress.prog == 100
-      setTimeout(() ->
-        $("span.meter").parent().parent().addClass('hide')
-        $('.sync-button').show()
-      , 250)
   )
 
   channel.bind('syncer.yearly', (yearly) ->
