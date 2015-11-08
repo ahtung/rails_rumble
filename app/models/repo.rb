@@ -9,7 +9,7 @@ class Repo < ActiveRecord::Base
     contributors.concat client(user).last_response.rels[:next].get.data while client(user).last_response.rels[:next]
     return if contributors == ''
     users.delete_all
-    contributors.each do |contributor|
+    contributors.select { |contr| organization.users.map(&:login).include?(contr.login) }.each do |contributor|
       user = User.from_login(contributor)
       users << user unless users.include?(user)
     end
