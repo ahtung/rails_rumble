@@ -31,5 +31,8 @@ module Eleman
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Google Analytics
+    config.middleware.use Rack::GoogleAnalytics, tracker: 'UA-59771384-7' if Rails.env.production?
   end
 end
