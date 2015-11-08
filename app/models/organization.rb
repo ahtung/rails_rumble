@@ -10,13 +10,13 @@ class Organization < ActiveRecord::Base
   after_commit :set_commits, on: :update, if: :est_at?
 
   def previous(user)
-    memberships = user.memberships.where("organization_id < ?", id)
+    memberships = user.memberships.where('organization_id < ?', id)
     previous = memberships.order(organization_id: :asc).last.organization_id if memberships.present?
     self.class.find(previous) if previous.present?
   end
 
   def next(user)
-    memberships = user.memberships.where("organization_id > ?", id)
+    memberships = user.memberships.where('organization_id > ?', id)
     next_organization = memberships.order(organization_id: :asc).first.organization_id if memberships.present?
     self.class.find(next_organization) if next_organization.present?
   end
