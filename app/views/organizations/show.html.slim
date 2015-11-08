@@ -4,6 +4,9 @@
 - if current_user
   .row.text-center
     p= link_to 'Sign Out', destroy_user_session_path, method: :delete
+- else
+  .row.text-center
+    p= link_to 'Back', root_path
 
   .row class="#{sync_in_progress ? 'show' : 'hide' }"
     .progress.small-12
