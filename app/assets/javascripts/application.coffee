@@ -34,7 +34,7 @@ $ ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
     return if org_name != progress.org_name
-    $("span.meter").css('width', "#{prog}%")
+    $("span.meter").css('width', "#{progress.prog}%")
     if progress.prog == 100
       setTimeout(() ->
         $("span.meter").parent().parent().addClass('hide')

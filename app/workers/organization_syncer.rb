@@ -8,10 +8,12 @@ class OrganizationSyncer
     organization = Organization.find(id)
 
     organization.fetch_repos_as_user!(user) # REQ
+    organization.update(commits: {})
+    organization.set_commits
 
     for month in 1..12 do
       organization.repos.each_with_index do |repo, repo_index|
-        RepoSyncer.perform_async(repo.id, user.id, year, month, repo_index, total_prog)
+        RepoSyncer.perform_async(repo.id, user.id, year, month, repo_index)
       end
     end
   end
