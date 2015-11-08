@@ -58,11 +58,11 @@ class OrganizationSyncer
           end
 
           prog += 1
-
-          puts "#{month} #{index + 1} #{repo_index + 1}"
           progress = (prog.to_f / total_prog.to_f * 100.0).to_i
-          puts "#{prog}"
-          new_message = { prog: progress, month: month, member: yearly[year][month].max_by{|k,v| v}, org_name: organization.name }
+          max_member = yearly[year][month].max_by{ |k,v| v }
+          best_index = contributor_names.index(max_member.first)
+          puts "#{prog} - #{best_index}"
+          new_message = { pos: best_index, prog: progress, month: month, member: max_member, org_name: organization.name }
           WebsocketRails[:sync].trigger('syncer', new_message)
         end
       end

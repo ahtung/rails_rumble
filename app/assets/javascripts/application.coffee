@@ -12,6 +12,10 @@ $ ->
     list_item = $("img[title='#{member_name}']").first().parent()
     return $("#slider-0").find('li').index(list_item)
 
+  update_slider = (org) ->
+    sliders[parseInt(org.month) - 1].stopAuto()
+    sliders[parseInt(org.month) - 1].goToSlide(parseInt(org.pos))
+
   update_progress = (prog) ->
     $("span.meter").css('width', "#{prog}%")
     if prog == 100
@@ -47,13 +51,8 @@ $ ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
     return if org_name != task.org_name
-
     update_progress(task.prog)
-
-    member_pos = find_member_pos(task)
-    if member_pos != -1
-      sliders[parseInt(task.month) - 1].stopAuto()
-      sliders[parseInt(task.month) - 1].goToSlide(member_pos + 1)
+    update_slider(task)
   )
 
   $(".alert-box").delay(1500).fadeOut "slow"
