@@ -4,21 +4,39 @@
  *= require bxslider-4
  */
 
-.org-navigation{
-  line-height:4.4em;
-}
-
 *{
   outline:0;
 }
 
-.bx-wrapper .bx-caption {
- background: #bf2a1a\9;
- background: rgba(191, 42, 26, 0.75);
+html, body
+{
+  min-height: 100vh;
 }
-.bx-wrapper .bx-caption span {
- color: #b6cac1;
- font-family: 'CircularStdBook';
+
+.half-row{
+  min-height: 50vh;
+  position:relative;
+}
+
+.bottom-aligned{
+  position:absolute;
+  bottom:0;
+}
+
+.org-navigation{
+  line-height:4.4em;
+}
+
+.bx-wrapper{
+  .bx-caption {
+    background: #bf2a1a\9;
+    background: rgba(191, 42, 26, 0.75);
+  }
+
+  .bx-caption span {
+   color: #b6cac1;
+   font-family: 'CircularStdBook';
+  }
 }
 
 #employee-ul li p {
