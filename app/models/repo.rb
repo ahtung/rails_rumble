@@ -10,7 +10,7 @@ class Repo < ActiveRecord::Base
     return if contributors == ''
     users.delete_all
     contributors.each do |contributor|
-      user = User.from_contributor(contributor)
+      user = User.from_login(contributor)
       users << user unless users.include?(user)
     end
   end
