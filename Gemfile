@@ -26,6 +26,10 @@ gem 'websocket-rails'
 gem 'websocket-driver', '0.6.2'
 gem 'faye-websocket', '0.10.0'
 
+source 'https://rails-assets.org' do
+  gem 'rails-assets-bxslider-4'
+end
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.3.0'
 end

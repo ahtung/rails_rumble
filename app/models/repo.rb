@@ -5,21 +5,19 @@ class Repo < ActiveRecord::Base
   has_many :users, through: :repos_users
 
   def fetch_contributors_as_user!(user)
-    client = user.client
     contributors = client.contributors("#{organization.name}/#{name}")
-    while client.last_response.rels[:next]
-      contributors.concat client.last_response.rels[:next].get.data
-    end
+    contributors.concat client.last_response.rels[:next].get.data while client.last_response.rels[:next]
     return if contributors == ''
     users.delete_all
     contributors.each do |contributor|
-      user = User.where(login: contributor.login).first_or_create do |user|
-        user.provider = 'github'
-        user.uid = contributor.id
-        user.password = Devise.friendly_token[0,20]
-        user.avatar_url = contributor.avatar_url
-      end
+      user = User.from_contributor(contributor)
       users << user unless users.include?(user)
     end
+  end
+
+  private
+
+  def client
+    @client ||= user.client
   end
 end
