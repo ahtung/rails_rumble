@@ -48,7 +48,7 @@ $ ->
     if progress.prog == 100
       setTimeout(() ->
         $("span.meter").parent().parent().addClass('hide')
-        $('.sync-button').removeAttr("disabled")
+        $('.sync-button').show()
       , 250)
   )
 

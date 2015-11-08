@@ -15,7 +15,7 @@
           - get_years(@organization.est_at).each do |year|
             li= link_to year, organization_path(@organization, year: year)
     - if current_user
-      p= link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny sync-button', remote: true, disabled: sync_in_progress
+      p= link_to 'Sync now', sync_organization_path(@organization), class: 'button tiny sync-button', remote: true, style: "display:#{(sync_in_progress ? 'none' : 'visible')};"
   .small-2.columns.org-navigation
     | &nbsp;
     - if current_user && @organization.next(current_user)

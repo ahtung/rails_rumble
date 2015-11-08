@@ -15,12 +15,12 @@ class OrganizationSyncer
     new_message = { org_name: @organization.name }
     WebsocketRails[:sync].trigger('syncer.started', new_message)
 
+    @organization.update_attributes(state: 'syncing')
     for month in 1..12 do
       @organization.repos.each_with_index do |repo, repo_index|
         beginning_of_month = Date.new(year, month, 1).beginning_of_month
         end_of_month = Date.new(year, month, 1).end_of_month
 
-        @organization.update_attributes(state: 'syncing') if repo_index == 0
         repo.fetch_contributors_as_user!(user)  # REQ
         new_message = { repo_count: @organization.repos.count, org_name: @organization.name }
         WebsocketRails[:sync].trigger('syncer.repos', new_message)
@@ -37,9 +37,9 @@ class OrganizationSyncer
             update_progress_and_notify
           end
         end
-        @organization.update_attributes(state: 'completed') if repo_index == @organization.repos.count - 1
       end
     end
+    @organization.update_attributes(state: 'completed')
   end
 
   def update_yearly_and_notify(year, month, contributors_commits)
