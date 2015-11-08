@@ -1,13 +1,13 @@
 .row
   .small-8.columns.small-centered.text-center
+    .row.half-row
+      h1.middle-aligned= link_to 'Eleman', root_path
     .row
-      h1= link_to 'Eleman', root_path
-    .row
-      h4 Have you ever seen one of these?
+      h2 Have you ever seen one of these?
     .row
       p= image_tag 'board.jpg', class: 'th'
     .row
-      h4 ... in one of these places, maybe?
+      h2 ... in one of these places, maybe?
     .row
       .row
         .small-4.column
@@ -20,38 +20,38 @@
           a.th href="//www.pizzahut.com" target='_blank'
             = image_tag 'pizza_hut_logo.jpg'
       .row
-        h4 We were curious to see what a similar thing would like for our businesses.
+        h2 We were curious to see what a similar thing would like for businesses we like.
       .row
-        .small-2.column
+        .small-4.medium-2.columns
           = link_to 'https://github.com/ahtung', target: '_blank', class: 'th' do
             = image_tag 'ahtung_logo.jpeg'
-        .small-2.column
+        .small-4.medium-2.columns
           = link_to 'https://github.com/hoppinger', target: '_blank', class: 'th' do
             = image_tag 'hoppinger_logo.png'
-        .small-2.column
+        .small-4.medium-2.columns
           = link_to 'https://github.com/wponrails', target: '_blank', class: 'th' do
             = image_tag 'wordpress_logo.png'
-        .small-2.column
+        .small-4.medium-2.columns
           = link_to 'https://github.com/thoughtbot', target: '_blank', class: 'th' do
             = image_tag 'thoughtbot.jpeg'
-        .small-2.column
+        .small-4.medium-2.columns
           = link_to 'https://github.com/railsrumble', target: '_blank', class: 'th' do
             = image_tag 'rails_rumble.png'
-        .small-2.column
+        .small-4.medium-2.columns
           = link_to 'https://github.com/ruby', target: '_blank', class: 'th' do
             = image_tag 'ruby_logo.png'
 
       .row
-        h4 ... and this is what we got, give it a try
+        h2 ... and this is what we got, give it a try
       .row
         p= link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: 'button'
       .row
-        h4 if you liked our eleman boards, please leave a star on github.
+        h2 Please leave a star on github if you enjoy it ;) 
       .row
         p.text-center
           iframe frameborder="0" height="30px" scrolling="0" src="https://ghbtns.com/github-btn.html?user=railsrumble&repo=eleman&type=star&count=true&size=large" width="160px"
       .row
-        h4 made by
+        h2 made by
         .row
           = link_to "//www.ahtung.co", class: 'th', target: '_blank' do
             = image_tag 'ah.png'
