@@ -3,9 +3,9 @@ class RepoSyncer
 
   sidekiq_options retry: false, unique: :until_and_while_executing
 
-  def perform(repo_id, user_id, year, month, repo_index, total_prog)
+  def perform(id, user_id, year, month, repo_index, total_prog)
     user = User.find(user_id)
-    @repo = Repo.find(repo_id)
+    @repo = Repo.find(id)
     @organization = @repo.organization
     beginning_of_month = Date.new(year, month, 1).beginning_of_month
     end_of_month = Date.new(year, month, 1).end_of_month
