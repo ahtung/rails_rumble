@@ -6,6 +6,8 @@ class Organization < ActiveRecord::Base
 
   serialize :commits, Hash
 
+  before_create :set_state
+
   def previous
     self.class.where(["id < ?", id]).last
   end
@@ -47,5 +49,11 @@ class Organization < ActiveRecord::Base
       best = monthly_scores.max_by{|k,v| v}
       best.nil? ? nil : best
     end
+  end
+
+  private
+
+  def set_state
+    state = 'waiting'
   end
 end
