@@ -1,8 +1,8 @@
 class OrganizationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :sample
   before_action :set_year, only: [:show, :sync]
   before_action :set_organization, only: [:show, :sync]
-  after_action :verify_authorized
+  after_action :verify_authorized, except: :sample
 
   def index
     authorize Organization
@@ -11,6 +11,11 @@ class OrganizationsController < ApplicationController
     else
       redirect_to page_path('no_org')
     end
+  end
+
+  def sample
+    @organization = Organization.all.sample
+    render :show
   end
 
   def show
