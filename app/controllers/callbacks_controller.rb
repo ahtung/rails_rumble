@@ -6,6 +6,6 @@ class CallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    redirect_to root_path, notice: params['message']
+    redirect_to root_path
   end
 end
