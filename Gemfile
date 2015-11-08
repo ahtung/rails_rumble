@@ -25,6 +25,7 @@ gem 'pry-rails'
 gem 'websocket-rails'
 gem 'websocket-driver', '0.6.2'
 gem 'faye-websocket', '0.10.0'
+gem 'sidekiq-unique-jobs'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bxslider-4'
