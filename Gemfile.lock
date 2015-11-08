@@ -108,7 +108,6 @@ GEM
       sass (>= 3.3.0, < 3.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
-    google-analytics-rails (0.0.6)
     hashie (3.4.3)
     high_voltage (2.4.0)
     hiredis (0.6.0)
@@ -162,6 +161,9 @@ GEM
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     rack (1.6.4)
+    rack-google-analytics (1.2.0)
+      actionpack
+      activesupport
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.4)
@@ -317,7 +319,6 @@ DEPENDENCIES
   faye-websocket (= 0.10.0)
   foreman
   foundation-rails
-  google-analytics-rails
   high_voltage (~> 2.4.0)
   jbuilder (~> 2.0)
   jquery-rails
@@ -325,6 +326,7 @@ DEPENDENCIES
   omniauth-github
   pg
   pry-rails
+  rack-google-analytics
   rails (= 4.2.4)
   rails-assets-bxslider-4!
   rails_12factor
