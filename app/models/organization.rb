@@ -33,7 +33,8 @@ class Organization < ActiveRecord::Base
     if ENV['REPO_LIMIT'] == 'false'
       reps.each { |repo| repos.where(name: repo.name).first_or_create }
     else
-      reps.first(20).each { |repo| repos.where(name: repo.name).first_or_create }
+      limit = ENV['REPO_LIMIT'].to_i
+      reps.first(limit).each { |repo| repos.where(name: repo.name).first_or_create }
     end
   end
 
