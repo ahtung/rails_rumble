@@ -50,7 +50,6 @@ class OrganizationSyncer
             else
               yearly[year][month].merge!(contributor => commits.count)
             end
-            puts yearly.inspect
           rescue
           end
 
@@ -58,7 +57,6 @@ class OrganizationSyncer
           progress = (prog.to_f / total_prog.to_f * 100.0).to_i
           max_member = yearly[year][month].max_by{ |k,v| v }
           best_index = contributor_names.index(max_member.first)
-          puts "#{prog} - #{best_index}"
           new_message = { pos: best_index, prog: progress, month: month, member: max_member, org_name: organization.name }
           WebsocketRails[:sync].trigger('syncer', new_message)
         end
