@@ -30,6 +30,16 @@ $ ->
   dispatcher = new WebSocketRails(ws_url)
   channel = dispatcher.subscribe('sync')
 
+  channel.bind('syncer.started', (message) ->
+    org_name = $('#organization-row').data('organization-name')
+    return if org_name == '' || org_name == null
+    return if org_name != message.org_name
+    for slider in sliders
+      slider.stopAuto()
+      slider.goToSlide(0)
+      slider.startAuto()
+  )
+
   channel.bind('syncer.progress', (progress) ->
     org_name = $('#organization-row').data('organization-name')
     return if org_name == '' || org_name == null
