@@ -26,6 +26,7 @@ class OrganizationSyncer
     total_prog = 12 * organization.users.count * organization.repos.count
     organization.update_attribute(:state, 'syncing')
 
+    prog = 0
     for month in 1..12 do
       beginning_of_month = Date.new(year, month, 1).beginning_of_month
       end_of_month = Date.new(year, month, 1).end_of_month
@@ -56,10 +57,12 @@ class OrganizationSyncer
           rescue
           end
 
-          puts "#{month} #{index} #{repo_index}"
-          prog = ((month * (index + 1) * (repo_index + 1)) / total_prog.to_f * 100.0).to_i
+          prog += 1
+
+          puts "#{month} #{index + 1} #{repo_index + 1}"
+          progress = (prog.to_f / total_prog.to_f * 100.0).to_i
           puts "#{prog}"
-          new_message = { prog: prog, month: month, member: yearly[year][month].max_by{|k,v| v}, org_name: organization.name }
+          new_message = { prog: progress, month: month, member: yearly[year][month].max_by{|k,v| v}, org_name: organization.name }
           WebsocketRails[:sync].trigger('syncer', new_message)
         end
       end
