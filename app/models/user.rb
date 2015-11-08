@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
 
   def client
     return if oauth_token.nil?
-    @client ||= Octokit::Client.new(access_token: oauth_token)
+    @client ||= Octokit::Client.new(access_token: oauth_token, per_page: 100)
   end
 
   def email_required?
