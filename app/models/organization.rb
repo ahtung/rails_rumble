@@ -41,10 +41,13 @@ class Organization < ActiveRecord::Base
   def fetch_members_for!(org, client)
     members = org.rels[:members].get.data
     members.concat(client.last_response.rels[:next].get.data) while client.last_response.rels[:next]
-    members.each do |member|
-      new_user = users.where(login: member.login).first_or_create
-      new_user.update(avatar_url: member.avatar_url)
+    if ENV['MEMBER_LIMIT'] == 'false'
+      members.each { |member| new_user = users.where(login: member.login).first_or_create; new_user.update(avatar_url: member.avatar_url) }
+    else
+      limit = ENV['MEMBER_LIMIT'].to_i
+      members.first(limit).each { |member| new_user = users.where(login: member.login).first_or_create; new_user.update(avatar_url: member.avatar_url) }
     end
+
   end
 
   def employees_of_the_year(year)
