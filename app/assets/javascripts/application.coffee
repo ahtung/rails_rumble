@@ -7,11 +7,6 @@
 $ ->
   $(document).foundation()
 
-  find_member_pos = (task) ->
-    member_name = task.member[0]
-    list_item = $("img[title='#{member_name}']").first().parent()
-    return $("#slider-0").find('li').index(list_item)
-
   update_slider = (org) ->
     sliders[parseInt(org.month) - 1].stopAuto()
     sliders[parseInt(org.month) - 1].goToSlide(parseInt(org.pos))
@@ -37,9 +32,9 @@ $ ->
 
     if sliders[i].data('complete')
       sliders[i].stopAuto()
-      member_pos = find_member_pos(member: [sliders[i].data('best'), -1])
-      if member_pos != -1
-        sliders[i].goToSlide(member_pos + 1)
+      member_pos = sliders[i].parent().parent().parent().data('best-pos')
+      if member_pos != -1 && member_pos != null
+        sliders[i].goToSlide(member_pos)
     else
       sliders[i].startAuto()
 

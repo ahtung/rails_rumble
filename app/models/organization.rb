@@ -50,8 +50,9 @@ class Organization < ActiveRecord::Base
   def employees_of_the_year(year)
     return Array.new(12) if commits.blank?
     commits[year].map do |month, monthly_scores|
-      best = monthly_scores.max_by{|k,v| v}
-      best.nil? ? nil : best
+      best = monthly_scores.max_by { |k,v| v }
+      best_index = users.map(&:login).index(best.first)
+      best.nil? ? nil : [best, best_index]
     end
   end
 
