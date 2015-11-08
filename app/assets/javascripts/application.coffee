@@ -12,6 +12,14 @@ $ ->
     list_item = $("img[title='#{member_name}']").first().parent()
     return $("#slider-0").find('li').index(list_item)
 
+  update_progress = (prog) ->
+    $("span.meter").css('width', "#{prog}%")
+    if prog == 100
+      setTimeout(() ->
+        $("span.meter").parent().parent().addClass('hide')
+        $('.sync-button').removeAttr("disabled")
+      , 250)
+
   sliders = []
   $('.bxslider').each (i, obj) ->
     sliders[i] = $(this).bxSlider(
@@ -33,17 +41,16 @@ $ ->
     else
       sliders[i].startAuto()
 
-
   ws_url = $('#employee-ul').data('ws-url')
   dispatcher = new WebSocketRails(ws_url)
   channel = dispatcher.subscribe('sync')
+
   channel.bind('syncer', (task) ->
-    perc = parseInt(task.month) * 100 / 12
-    $("span.meter").css('width', "#{perc}%")
-    if parseInt(task.month) == 12
-      setTimeout(() ->
-        $("span.meter").parent().fadeOut()
-      , 250)
+    org_name = $('#organization-row').data('organization-name')
+    return if org_name == '' || org_name == null
+    return if org_name != task.org_name
+
+    update_progress(task.prog)
 
     member_pos = find_member_pos(task)
     if member_pos != -1
