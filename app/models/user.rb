@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
 
   validates :email, presence: false, email: false
 
-  after_commit :fetch_organizations!, on: :create
-
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.provider = auth.provider

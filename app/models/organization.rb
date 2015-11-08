@@ -60,12 +60,16 @@ class Organization < ActiveRecord::Base
   end
 
   def set_commits
+    return unless commits.nil?
+    commits = {}
     year_first = est_at.strftime("%Y").to_i
     year_now = Time.now.strftime("%Y").to_i
     [*year_first..year_now].each do |year|
+      commits.merge!(year => {})
       [*1..12].each do |month|
-        commits[year].push(month => {})
+        commits[year].merge!(month => {})
       end
     end
+    update_attribute(:commits, commits)
   end
 end
