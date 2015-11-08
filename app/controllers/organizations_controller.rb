@@ -5,6 +5,7 @@ class OrganizationsController < ApplicationController
   after_action :verify_authorized
 
   def index
+    authorize Organization
     if current_user.organizations.count > 0
       redirect_to organization_path(current_user.organizations.first)
     else
