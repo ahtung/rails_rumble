@@ -168,7 +168,7 @@ GEM
       pry (>= 0.9.10)
     pundit (1.0.1)
       activesupport (>= 3.0.0)
-    rack (1.6.4)
+    rack (1.6.13)
     rack-google-analytics (1.2.0)
       actionpack
       activesupport
